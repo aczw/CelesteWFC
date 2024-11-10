@@ -60,7 +60,7 @@ The article on Celeste's tileset was useful in understanding the rules behind ho
 
 This is how I imagine the application will look like:
 
-![](design.png)
+![](media/design.png)
 
 ## Timeline
 
