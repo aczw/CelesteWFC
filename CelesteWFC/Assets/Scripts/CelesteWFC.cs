@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -14,12 +13,12 @@ public class CelesteWFC : MonoBehaviour
     [SerializeField] private GridSize gridSettings;
     [SerializeField] private Tilemap tilemap;
     [SerializeField] private TileBase tile;
-    [SerializeField] private List<Cell> possibleStates;
+    [SerializeField] private GridCellPalette possibleStates;
 
     private WaveFunctionCollapse wfc;
 
     private void Awake() {
-        wfc = new WaveFunctionCollapse(gridSettings.width, gridSettings.height);
+        wfc = new WaveFunctionCollapse(gridSettings.width, gridSettings.height, possibleStates);
     }
 
     private void Start() {
