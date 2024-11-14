@@ -13,19 +13,26 @@ public class CelesteWFC : MonoBehaviour
     [SerializeField] private GridSize gridSettings;
     [SerializeField] private Tilemap tilemap;
     [SerializeField] private TileBase tile;
-    [SerializeField] private GridCellPalette possibleStates;
+    [SerializeField] private Palette palette;
 
     private WaveFunctionCollapse wfc;
 
     private void Awake() {
-        wfc = new WaveFunctionCollapse(gridSettings.width, gridSettings.height, possibleStates);
+        wfc = new WaveFunctionCollapse(gridSettings.width, gridSettings.height, palette);
     }
 
     private void Start() {
-        for (var y = 0; y < gridSettings.height; ++y) {
-            for (var x = 0; x < gridSettings.width; ++x) {
-                tilemap.SetTile(new Vector3Int(x, y, 0), tile);
-            }
+        var x = 0;
+
+        foreach (var state in wfc.grid[0, 0].states) {
+            var position = new Vector3Int(x, 0, 0);
+            tilemap.SetTile(position, state.tile);
+
+            var angle = -90f * state.timesRotatedClockwise;
+            var rotMat = Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0f, 0f, angle), Vector3.one);
+            tilemap.SetTransformMatrix(position, rotMat);
+
+            x += 1;
         }
     }
 }

@@ -606,8 +606,7 @@ MonoBehaviour:
     height: 50
   tilemap: {fileID: 60413605}
   tile: {fileID: 11400000, guid: 70f60aa05984b754d97f88dc7219f7f8, type: 2}
-  possibleStates:
-  - {fileID: 11400000, guid: d9f759cc6ca23204e8cd8f0752977283, type: 2}
+  palette: {fileID: 11400000, guid: 5ef72665b795a6b4090358cb8e56ab71, type: 2}
 --- !u!1 &2003777555
 GameObject:
   m_ObjectHideFlags: 0

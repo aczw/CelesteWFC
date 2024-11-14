@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee118c76023b89444bf2462f628a3f7a, type: 3}
+  m_Name: Test
+  m_EditorClassIdentifier: 
+  paletteName: Test
+  tiles:
+  - tileName: Crossroad
+    tile: {fileID: 11400000, guid: 70f60aa05984b754d97f88dc7219f7f8, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: 1
+      down: 1
+      left: 1
+      right: 1
+  - tileName: Blank
+    tile: {fileID: 11400000, guid: f5c4e3ffea6b0a840a9e30a0265d3ca2, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: 0
+      down: 0
+      left: 0
+      right: 0
+  - tileName: Straight Line
+    tile: {fileID: 11400000, guid: 697368e7b85811a4abd7d6efe1f5c9d9, type: 2}
+    symmetry: 2
+    originalSocket:
+      up: 1
+      down: 1
+      left: 0
+      right: 0
+  - tileName: Corner
+    tile: {fileID: 11400000, guid: f82b04dd1ca33764696d3c5bdf04cec3, type: 2}
+    symmetry: 3
+    originalSocket:
+      up: 1
+      down: 0
+      left: 0
+      right: 1
+  - tileName: T
+    tile: {fileID: 11400000, guid: 31b258489bc3c41408733fecc459ae32, type: 2}
+    symmetry: 1
+    originalSocket:
+      up: 1
+      down: 0
+      left: 1
+      right: 1
