@@ -34,6 +34,8 @@ public class Cell
 
     public Cell(in List<TileInfo> tileInfo) {
         states = tileInfo.SelectMany(ti => {
+            if (ti.disabled) return new List<State>();
+
             var currState = new State {
                 tile = ti.tile,
                 socket = ti.originalSocket,
@@ -71,7 +73,10 @@ public class Cell
     public bool IsCollapsed => states.Count == 1;
 }
 
-public enum NeighborType
+/// <summary>
+///     Denotes on which of the four sides does the neighbor cell lie relative to the current cell.
+/// </summary>
+public enum NeighborLocation
 {
     Up,
     Down,
@@ -87,9 +92,9 @@ public class WaveFunctionCollapse
 
     // Up, down, left, right neighbors. Note to self: I treat coords == indices. Since row index increases
     // going "down" this means to go up, we subtract by 1 and vice versa.
-    private static readonly List<(NeighborType nbType, Vector2Int vec)> Offsets = new() {
-        (NeighborType.Up, new Vector2Int(0, -1)), (NeighborType.Down, new Vector2Int(0, 1)),
-        (NeighborType.Left, new Vector2Int(-1, 0)), (NeighborType.Right, new Vector2Int(1, 0))
+    private static readonly List<(NeighborLocation nbType, Vector2Int vec)> Offsets = new() {
+        (NeighborLocation.Up, new Vector2Int(0, -1)), (NeighborLocation.Down, new Vector2Int(0, 1)),
+        (NeighborLocation.Left, new Vector2Int(-1, 0)), (NeighborLocation.Right, new Vector2Int(1, 0))
     };
 
     public WaveFunctionCollapse(int width, int height, Palette palette) {
@@ -108,7 +113,6 @@ public class WaveFunctionCollapse
         var currentPossibleStates = grid[coords.y, coords.x].states;
         var randomState = currentPossibleStates[Random.Range(0, currentPossibleStates.Count)];
 
-        // Clear possible tiles and only add back randomly chosen one
         currentPossibleStates.Clear();
         currentPossibleStates.Add(randomState);
     }
@@ -137,14 +141,11 @@ public class WaveFunctionCollapse
         var stack = new Stack<Vector2Int>();
         stack.Push(coords);
 
-        // Retrieve the singular state left in the cell at this coordinate (because it was just collapsed)
-        var collapsedState = grid[coords.y, coords.x].states[0];
-
         while (stack.Count > 0) {
             var currCoords = stack.Pop();
 
             // Check which of the four neighbors are valid, because we might be on the grid edge
-            var validNeighbors = new List<(NeighborType nbType, Vector2Int vec)>();
+            var validNeighbors = new List<(NeighborLocation nbType, Vector2Int vec)>();
             Offsets.ForEach(offset => {
                 var newX = currCoords.x + offset.vec.x;
                 var newY = currCoords.y + offset.vec.y;
@@ -159,34 +160,33 @@ public class WaveFunctionCollapse
             foreach (var (nbType, neighborCoords) in validNeighbors) {
                 var nbCell = grid[neighborCoords.y, neighborCoords.x];
 
-                if (nbCell.states.Count == 0) continue;
+                // Not sure when this will happen. The video I was following has this though.
+                if (nbCell.states.Count == 0) {
+                    Debug.LogWarning("Propagate(): number of states in neighbor cell is zero. Skipping this iteration");
+                    continue;
+                }
 
-                // Get valid states that are available in this neighbor, and match the socket for this cell
-                var validNeighborStates = new List<State>();
-                nbCell.states.ForEach(nbState => {
-                    switch (nbType) {
-                    case NeighborType.Up:
-                        if (collapsedState.socket.up == nbState.socket.down) validNeighborStates.Add(nbState);
-                        break;
+                // Depending on the location of the neighbor cell, we match against a different predicate. This
+                // function checks whether sockets between the current and neighbor cell align. If so, then this
+                // neighbor state is valid for the current cell.
+                Func<Socket, Socket, bool> predicateFn = (curr, nb) => nbType switch {
+                    NeighborLocation.Up => curr.up == nb.down,
+                    NeighborLocation.Down => curr.down == nb.up,
+                    NeighborLocation.Left => curr.left == nb.right,
+                    NeighborLocation.Right => curr.right == nb.left,
+                    _ => throw new ArgumentOutOfRangeException()
+                };
 
-                    case NeighborType.Down:
-                        if (collapsedState.socket.down == nbState.socket.up) validNeighborStates.Add(nbState);
-                        break;
-
-                    case NeighborType.Left:
-                        if (collapsedState.socket.left == nbState.socket.right) validNeighborStates.Add(nbState);
-                        break;
-
-                    case NeighborType.Right:
-                        if (collapsedState.socket.right == nbState.socket.left) validNeighborStates.Add(nbState);
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException();
+                // Get all valid neighbor states for all possible states of the current cell. In other words, if a
+                // neighbor socket aligns with at least *one* of the current cell's possible states, then we include it.
+                var validNeighborStates = new HashSet<State>();
+                foreach (var nbState in nbCell.states) {
+                    foreach (var currState in grid[currCoords.y, currCoords.x].states) {
+                        if (predicateFn(currState.socket, nbState.socket)) {
+                            validNeighborStates.Add(nbState);
+                        }
                     }
-                });
-
-                if (validNeighborStates.Count == 0) Debug.LogError("Propagate(): valid neighbor states == zero");
+                }
 
                 // If the lists have the same number of states then nothing was removed, which means this neighbor
                 // cell has not been updated, and therefore we do not need to propagate any changes. So, we only enter
@@ -203,6 +203,7 @@ public class WaveFunctionCollapse
 
     public void Iterate() {
         var nextCellToCollapse = PickLowestEntropyCell();
+
         Collapse(nextCellToCollapse);
         Propagate(nextCellToCollapse);
     }

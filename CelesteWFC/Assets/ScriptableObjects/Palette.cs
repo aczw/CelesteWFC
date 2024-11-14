@@ -32,6 +32,7 @@ public enum SymmetryType
     public string tileName;
     public TileBase tile;
     public SymmetryType symmetry;
+    public bool disabled;
     public Socket originalSocket;
 }
 
