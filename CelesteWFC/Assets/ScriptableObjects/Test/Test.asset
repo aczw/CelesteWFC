@@ -14,14 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paletteName: Test
   tiles:
-  - tileName: Crossroad
-    tile: {fileID: 11400000, guid: 70f60aa05984b754d97f88dc7219f7f8, type: 2}
-    symmetry: 0
-    originalSocket:
-      up: 1
-      down: 1
-      left: 1
-      right: 1
   - tileName: Blank
     tile: {fileID: 11400000, guid: f5c4e3ffea6b0a840a9e30a0265d3ca2, type: 2}
     symmetry: 0
@@ -45,6 +37,14 @@ MonoBehaviour:
       up: 1
       down: 0
       left: 0
+      right: 1
+  - tileName: Crossroads
+    tile: {fileID: 11400000, guid: 70f60aa05984b754d97f88dc7219f7f8, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: 1
+      down: 1
+      left: 1
       right: 1
   - tileName: T
     tile: {fileID: 11400000, guid: 31b258489bc3c41408733fecc459ae32, type: 2}

@@ -15,12 +15,16 @@ public enum SymmetryType
     L
 }
 
-[Serializable] public struct Socket
+[Serializable] public record Socket
 {
     public bool up;
     public bool down;
     public bool left;
     public bool right;
+
+    public override string ToString() {
+        return $"up: {up}, down: {down}, left: {left}, right: {right}";
+    }
 }
 
 [Serializable] public struct TileInfo
