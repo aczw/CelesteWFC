@@ -80,3 +80,7 @@ This is how I imagine the application will look like:
 - Final (12/2)
   - Final polish, fix bugs, making the UI look good, etc.
   - Any of the stretch goals
+
+## Milestone 1
+
+harder than i expected

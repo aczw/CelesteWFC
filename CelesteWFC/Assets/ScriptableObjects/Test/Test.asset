@@ -17,7 +17,7 @@ MonoBehaviour:
   - tileName: Crossroads
     tile: {fileID: 11400000, guid: 70f60aa05984b754d97f88dc7219f7f8, type: 2}
     symmetry: 0
-    disabled: 1
+    disabled: 0
     originalSocket:
       up: 1
       down: 1
@@ -53,7 +53,7 @@ MonoBehaviour:
   - tileName: T
     tile: {fileID: 11400000, guid: 31b258489bc3c41408733fecc459ae32, type: 2}
     symmetry: 1
-    disabled: 1
+    disabled: 0
     originalSocket:
       up: 1
       down: 0

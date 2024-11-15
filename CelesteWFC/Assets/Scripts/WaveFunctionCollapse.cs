@@ -8,6 +8,8 @@ using Random = UnityEngine.Random;
 public struct State
 {
     public TileBase tile;
+    public string tileName;
+
     public Socket socket;
     public int timesRotatedClockwise;
 
@@ -17,6 +19,7 @@ public struct State
 
         return new State {
             tile = state.tile,
+            tileName = state.tileName,
             socket = new Socket {
                 up = socket.left,
                 left = socket.down,
@@ -38,6 +41,7 @@ public class Cell
 
             var currState = new State {
                 tile = ti.tile,
+                tileName = ti.tileName,
                 socket = ti.originalSocket,
                 timesRotatedClockwise = 0
             };
