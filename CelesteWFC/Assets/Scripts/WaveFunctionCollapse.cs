@@ -161,7 +161,7 @@ public class WaveFunctionCollapse
             });
 
             // For each up, down, left, and right (in that order) neighbor of the collapsed cell
-            foreach (var (nbType, neighborCoords) in validNeighbors) {
+            foreach (var (nbLoc, neighborCoords) in validNeighbors) {
                 var nbCell = grid[neighborCoords.y, neighborCoords.x];
 
                 // Not sure when this will happen. The video I was following has this though.
@@ -173,7 +173,7 @@ public class WaveFunctionCollapse
                 // Depending on the location of the neighbor cell, we match against a different predicate. This
                 // function checks whether sockets between the current and neighbor cell align. If so, then this
                 // neighbor state is valid for the current cell.
-                Func<Socket, Socket, bool> predicateFn = (curr, nb) => nbType switch {
+                Func<Socket, Socket, bool> predicateFn = (curr, nb) => nbLoc switch {
                     NeighborLocation.Up => curr.up == nb.down,
                     NeighborLocation.Down => curr.down == nb.up,
                     NeighborLocation.Left => curr.left == nb.right,

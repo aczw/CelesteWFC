@@ -10,9 +10,9 @@ using UnityEngine.Tilemaps;
 
 public class CelesteWFC : MonoBehaviour
 {
-    [SerializeField] private GridSize gridSettings;
     [SerializeField] private Tilemap tilemap;
     [SerializeField] private Palette palette;
+    [SerializeField] private GridSize gridSettings;
 
     private WaveFunctionCollapse wfc;
 
@@ -20,6 +20,11 @@ public class CelesteWFC : MonoBehaviour
         wfc = new WaveFunctionCollapse(gridSettings.width, gridSettings.height, palette);
     }
 
+    /// <summary>
+    ///     Draws currently collapsed tiles to the tilemap, if any. Note: because tiles are arranged in a
+    ///     2D array, the topmost row has an index of 0; value of Y increases going *down.* This means we should
+    ///     draw the rows top down!
+    /// </summary>
     private void Paint() {
         for (var y = 0; y < wfc.height; ++y) {
             for (var x = 0; x < wfc.width; ++x) {
@@ -27,7 +32,7 @@ public class CelesteWFC : MonoBehaviour
 
                 if (cell.IsCollapsed) {
                     var state = cell.states[0];
-                    var position = new Vector3Int(x, y, 0);
+                    var position = new Vector3Int(x, wfc.height - 1 - y, 0);
 
                     tilemap.SetTile(position, state.tile);
 
@@ -35,8 +40,6 @@ public class CelesteWFC : MonoBehaviour
                     var rotMat = Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0f, 0f, angle), Vector3.one);
 
                     tilemap.SetTransformMatrix(position, rotMat);
-
-                    Debug.Log($"({x + 1}, {y + 1}), '{state.tileName}', {state.socket}");
                 }
             }
         }

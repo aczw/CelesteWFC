@@ -1594,8 +1594,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridSettings:
-    width: 10
-    height: 5
+    width: 30
+    height: 30
   tilemap: {fileID: 60413605}
   palette: {fileID: 11400000, guid: 5ef72665b795a6b4090358cb8e56ab71, type: 2}
 --- !u!1 &2003777555
