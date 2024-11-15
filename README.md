@@ -1,117 +1,106 @@
-# Final Project!
+# CelesteWFC
 
-This is it! The culmination of your procedural graphics experience this semester. For your final project, we'd like to give you the time and space to explore a topic of your choosing. You may choose any topic you please, so long as you vet the topic and scope with an instructor or TA. We've provided some suggestions below. The scope of your project should be roughly 1.5 homework assignments). To help structure your time, we're breaking down the project into 4 milestones:
+## Introduction/motivations
 
-## Project planning: Design Doc (due 11/6)
-Before submitting your first milestone, _you must get your project idea and scope approved by Rachel, Adam or a TA._
+I love Celeste. Everything about the game is great: the pixel art, the music, the gameplay, the story. One of the best parts of the game are the levels. They are designed so well and I can't believe that they're tile based because everything looks so natural.
 
-### Design Doc
-Start off by forking this repository. In your README, write a design doc to outline your project goals and implementation plan. It must include the following sections:
+Celeste is the perfect candidate for exploring wave function collapse, due to its reliance on a grid system. I always thought WFC sounded cool as heck and wanted to try implementing it on my own. What better way to do so than to use one of the best platformers of all time _[citation needed]_?
 
-#### Introduction
-- What motivates your project?
+## Goal
 
-#### Goal
-- What do you intend to achieve with this project?
+- Learn in detail how wave function collapse works and how to implement it 
+- Write well-structured, performant, and idomatic C# code
+- Work more with 2D Unity, including tilemaps and player movement
 
-#### Inspiration/reference:
-- You must have some form of reference material for your final project. Your reference may be a research paper, a blog post, some artwork, a video, another class at Penn, etc.  
-- Include in your design doc links to and images of your reference material.
+## Inspiration/references
 
-#### Specification:
-- Outline the main features of your project.
+These links helped me decide on this project and will guide me through the process:
 
-#### Techniques:
-- What are the main technical/algorithmic tools you’ll be using? Give an overview, citing specific papers/articles.
+- [Celeste Tilesets, Step-by-Step (article)](https://aran.ink/posts/celeste-tilesets)
+- [Why I use Wave Function Collapse to create levels for my game (video)](https://www.youtube.com/watch?v=TO0Tx3w5abQ)
+- [Superpositions, Sudoku, the Wave Function Collapse algorithm. (video)](https://www.youtube.com/watch?v=2SuvO4Gi7uY)
+- [EPC2018 - Oskar Stalberg - Wave Function Collapse in Bad North (video)](https://www.youtube.com/watch?v=0bcZb-SsnrA)
+- [Paul Merrell, "Example-Based Model Synthesis" (2007)](https://paulmerrell.org/wp-content/uploads/2021/06/model_synthesis.pdf)
+- [mxgnm / WaveFunctionCollapse (repo)](https://github.com/mxgmn/WaveFunctionCollapse)
+- [Recreating Celeste's Movement | Mix and Jam (video)](https://www.youtube.com/watch?v=STyY26a_dPY)
 
-#### Design:
-- How will your program fit together? Make a simple free-body diagram illustrating the pieces.
+## Specification
 
-#### Timeline:
-- Create a week-by-week set of milestones for each person in your group. Make sure you explicitly outline what each group member's duties will be.
+There are three overarching parts of this project:
 
-Submit your Design doc as usual via pull request against this repository.
-## Milestone 1: Implementation part 1 (due 11/13)
-Begin implementing your engine! Don't worry too much about polish or parameter tuning -- this week is about getting together the bulk of your generator implemented. By the end of the week, even if your visuals are crude, the majority of your generator's functionality should be done.
+- C# implementation of WFC, most likely customized for Celeste's purposes
+- Celeste-specific
+  - Includes at least Chapter 1's "Forsaken City" tileset
+  - Preset that constrains the grid to be exactly that of Celeste's
+- Grid editor/viewer GUI
+  - Ability to specify number of grid columns and rows
+  - Ability to click a tile to constrain it to a limited number of states (e.g. forcing a path to be carved out)
+  - Ability to zoom in/out and pan around the grid/output
 
-Put all your code in your forked repository.
+### Stretch goals
 
-Submission: Add a new section to your README titled: Milestone #1, which should include
-- written description of progress on your project goals. If you haven't hit all your goals, what's giving you trouble?
-- Examples of your generators output so far
-We'll check your repository for updates. No need to create a new pull request.
-## Milestone 2: Implementation part 2 (due 11/25)
-We're over halfway there! This week should be about fixing bugs and extending the core of your generator. Make sure by the end of this week _your generator works and is feature complete._ Any core engine features that don't make it in this week should be cut! Don't worry if you haven't managed to exactly hit your goals. We're more interested in seeing proof of your development effort than knowing your planned everything perfectly. 
+I have some ideas on additional features if I have more time:
 
-Put all your code in your forked repository.
+- Ability to export/download finished output as a single image
+- Generate more levels using different tilesets
+- Performance improvements beyond the naive implementation
+- Allowing the user to give an _example_ input which the algorithm uses instead to build its ruleset, generating levels from that instead
+- Porting the project to browser via WebGL
+- Loading the generated output as an actual custom map in Celeste via [Everest](https://everestapi.github.io/), a community mod loader
 
-Submission: Add a new section to your README titled: Milestone #3, which should include
-- written description of progress on your project goals. If you haven't hit all your goals, what did you have to cut and why? 
-- Detailed output from your generator, images, video, etc.
-We'll check your repository for updates. No need to create a new pull request.
+## Techniques
 
-Come to class on the due date with a WORKING COPY of your project. We'll be spending time in class critiquing and reviewing your work so far.
+This project is specifically about wave function collapse so that's the algorithmic technique I'm focusing on. In particular, I'll be reading Paul Merell's specification from his original 2007 i3D paper (linked above) as well as Maxim Gumin's work, which introduced the name "wave function collapse" for the algorithm and popularized it (the original repo is also linked above).
 
-## Final submission (due 12/2)
-Time to polish! Spen this last week of your project using your generator to produce beautiful output. Add textures, tune parameters, play with colors, play with camera animation. Take the feedback from class critques and use it to take your project to the next level.
+I've already watched the videos I linked above. I think they provided me a more intuitive understanding of the repo and I'll probably revisit them if I become confused by the more technical jargon of the papers. Also, the video themselves reference the original papers and provide me a good overview of how/where to start.
 
-Submission:
-- Push all your code / files to your repository
-- Come to class ready to present your finished project
-- Update your README with two sections 
-  - final results with images and a live demo if possible
-  - post mortem: how did your project go overall? Did you accomplish your goals? Did you have to pivot?
+The article on Celeste's tileset was useful in understanding the rules behind how Celeste laid out its levels. This will be used for developing the ruleset.
 
-## Topic Suggestions
+## Design
 
-### Create a generator in Houdini
+This is how I imagine the application will look like:
 
-### A CLASSIC 4K DEMO
-- In the spirit of the demo scene, create an animation that fits into a 4k executable that runs in real-time. Feel free to take inspiration from the many existing demos. Focus on efficiency and elegance in your implementation.
-- Example: 
-  - [cdak by Quite & orange](https://www.youtube.com/watch?v=RCh3Q08HMfs&list=PLA5E2FF8E143DA58C)
+![](media/design.png)
 
-### A RE-IMPLEMENTATION
-- Take an academic paper or other pre-existing project and implement it, or a portion of it.
-- Examples:
-  - [2D Wavefunction Collapse Pokémon Town](https://gurtd.github.io/566-final-project/)
-  - [3D Wavefunction Collapse Dungeon Generator](https://github.com/whaoran0718/3dDungeonGeneration)
-  - [Reaction Diffusion](https://github.com/charlesliwang/Reaction-Diffusion)
-  - [WebGL Erosion](https://github.com/LanLou123/Webgl-Erosion)
-  - [Particle Waterfall](https://github.com/chloele33/particle-waterfall)
-  - [Voxelized Bread](https://github.com/ChiantiYZY/566-final)
+## Timeline
 
-### A FORGERY
-Taking inspiration from a particular natural phenomenon or distinctive set of visuals, implement a detailed, procedural recreation of that aesthetic. This includes modeling, texturing and object placement within your scene. Does not need to be real-time. Focus on detail and visual accuracy in your implementation.
-- Examples:
-  - [The Shrines](https://github.com/byumjin/The-Shrines)
-  - [Watercolor Shader](https://github.com/gracelgilbert/watercolor-stylization)
-  - [Sunset Beach](https://github.com/HanmingZhang/homework-final)
-  - [Sky Whales](https://github.com/WanruZhao/CIS566FinalProject)
-  - [Snail](https://www.shadertoy.com/view/ld3Gz2)
-  - [Journey](https://www.shadertoy.com/view/ldlcRf)
-  - [Big Hero 6 Wormhole](https://2.bp.blogspot.com/-R-6AN2cWjwg/VTyIzIQSQfI/AAAAAAAABLA/GC0yzzz4wHw/s1600/big-hero-6-disneyscreencaps.com-10092.jpg)
+- Milestone 1 (11/13)
+  - Project and Unity setup
+  - Working basic implementation with a simpler tileset (basic pipe-looking structures)
+  - No GUI or customization, should just run upon playing the game
+- By 11/20
+  - Implement the grid editor
+  - Ability to pan and zoom around
+  - Adjust grid width and height
+  - Generate button
+- Milestone 2 (11/25)
+  - Import Celeste's tileset and develop customized tileset
+  - Add a player controller and mimic Celeste's movement as best as I can and make the generated output actually playable
+  - Ability to select a tile and edit its constraints in the editor
+- Final (12/2)
+  - Final polish, fix bugs, making the UI look good, etc.
+  - Any of the stretch goals
 
-### A GAME LEVEL
-- Like generations of game makers before us, create a game which generates an navigable environment (eg. a roguelike dungeon, platforms) and some sort of goal or conflict (eg. enemy agents to avoid or items to collect). Aim to create an experience that will challenge players and vary noticeably in different playthroughs, whether that means procedural dungeon generation, careful resource management or an interesting AI model. Focus on designing a system that is capable of generating complex challenges and goals.
-- Examples:
-  - [Rhythm-based Mario Platformer](https://github.com/sgalban/platformer-gen-2D)
-  - [Pokémon Ice Puzzle Generator](https://github.com/jwang5675/Ice-Puzzle-Generator)
-  - [Abstract Exploratory Game](https://github.com/MauKMu/procedural-final-project)
-  - [Tiny Wings](https://github.com/irovira/TinyWings)
-  - Spore
-  - Dwarf Fortress
-  - Minecraft
-  - Rogue
+## Milestone 1
 
-### AN ANIMATED ENVIRONMENT / MUSIC VISUALIZER
-- Create an environment full of interactive procedural animation. The goal of this project is to create an environment that feels responsive and alive. Whether or not animations are musically-driven, sound should be an important component. Focus on user interactions, motion design and experimental interfaces.
-- Examples:
-  - [The Darkside](https://github.com/morganherrmann/thedarkside)
-  - [Music Visualizer](https://yuruwang.github.io/MusicVisualizer/)
-  - [Abstract Mesh Animation](https://github.com/mgriley/cis566_finalproj)
-  - [Panoramical](https://www.youtube.com/watch?v=gBTTMNFXHTk)
-  - [Bound](https://www.youtube.com/watch?v=aE37l6RvF-c)
+I've successfully reached my milestone 1 goals and then some. In particular, a basic Unity 6 project was set up with TextMeshPro imported. This allowed me to work on the main focus of this milestone (and overarching project), the actual algorithm. It took a few iterations and rewrites but I think I've settled on a design that is understandable and modular.
 
-### YOUR OWN PROPOSAL
-- You are of course welcome to propose your own topic . Regardless of what you choose, you and your team must research your topic and relevant techniques and come up with a detailed plan of execution. You will meet with some subset of the procedural staff before starting implementation for approval.
+I didn't specify it in my goals above but I wanted an easy way to swap in and out tile palettes and their rules. This would make the generator more useful (can switch tilesets at runtime) and made debugging much easier (adding, removing, disabling certain tiles). I was able to do that and probably saved myself a lot of future work.
+
+As I learned more about WFC, it turned out that there are many small decisions I had to make about the implementation. For example, how to actually check which states in a neighbor cell are valid. I ended up on a socket-style system that I could configure via a ScriptableObject before runtime. Again, I'm proud of how modular it is.
+
+I made a lot of dumb mistakes and spent a lot of time debugging issues that turned out to not be related to my WFC implementation at all. It's okay though, everything works now and it's in the past.
+
+### Examples
+
+Using a simple tile palette made out of interconnecting pipes, I'm already able to generate interesting-looking patterns. I took the opportunity to also implement some milestone 2 features early, including the ability to specify grid width/height and the ability to "step" through iterations of the algorithm (instead of it all being solved at once). All of these helped with debugging. Take a look:
+
+
+
+| ![](media/m1/5x5.png) | ![](media/m1/12x6.png) |
+|-------|------|
+| A simple 5x5 grid. | 12x6 grid. |
+| ![](media/m1/12x6_2.png) | ![](media/m1/100x100.png) |
+| Another 12x6 grid. Simply hit Reset and Solve again. | 100x100 grid, just because I can. (You might want to zoom in.) |
+| ![](media/m1/8x4_step.png) |
+| You can also step through each iteration step individually. Here the algorithm is in the middle of generating a 8x4 grid. |
