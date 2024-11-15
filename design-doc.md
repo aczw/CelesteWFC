@@ -83,4 +83,24 @@ This is how I imagine the application will look like:
 
 ## Milestone 1
 
-harder than i expected
+I've successfully reached my milestone 1 goals and then some. In particular, a basic Unity 6 project was set up with TextMeshPro imported. This allowed me to work on the main focus of this milestone (and overarching project), the actual algorithm. It took a few iterations and rewrites but I think I've settled on a design that is understandable and modular.
+
+I didn't specify it in my goals above but I wanted an easy way to swap in and out tile palettes and their rules. This would make the generator more useful (can switch tilesets at runtime) and made debugging much easier (adding, removing, disabling certain tiles). I was able to do that and probably saved myself a lot of future work.
+
+As I learned more about WFC, it turned out that there are many small decisions I had to make about the implementation. For example, how to actually check which states in a neighbor cell are valid. I ended up on a socket-style system that I could configure via a ScriptableObject before runtime. Again, I'm proud of how modular it is.
+
+I made a lot of dumb mistakes and spent a lot of time debugging issues that turned out to not be related to my WFC implementation at all. It's okay though, everything works now and it's in the past.
+
+### Examples
+
+Using a simple tile palette made out of interconnecting pipes, I'm already able to generate interesting-looking patterns. I took the opportunity to also implement some milestone 2 features early, including the ability to specify grid width/height and the ability to "step" through iterations of the algorithm (instead of it all being solved at once). All of these helped with debugging. Take a look:
+
+
+
+| ![](media/m1/5x5.png) | ![](media/m1/12x6.png) |
+|-------|------|
+| A simple 5x5 grid. | 12x6 grid. |
+| ![](media/m1/12x6_2.png) | ![](media/m1/100x100.png) |
+| Another 12x6 grid. Simply hit Reset and Solve again. | 100x100 grid, just because I can. (You might want to zoom in.) |
+| ![](media/m1/8x4_step.png) |
+| You can also step through each iteration step individually. Here the algorithm is in the middle of generating a 8x4 grid. |
