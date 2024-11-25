@@ -124,6 +124,19 @@ public class CelesteWFC : MonoBehaviour
         Paint();
     }
 
+    public void ResizeCeleste() {
+        wfc = new WaveFunctionCollapse(40, 23, palette);
+        gridSettings.width = 40;
+        gridSettings.height = 23;
+        editor.widthInput.text = "40";
+        editor.heightInput.text = "23";
+
+        output.ClearAllTiles();
+        editor.RedrawPlaceholder();
+        editor.CameraCeleste();
+        Paint();
+    }
+
     public bool IsCollapsed(int x, int y) {
         return wfc.grid[y, x].IsCollapsed;
     }

@@ -232,4 +232,9 @@ public class GridEditor : MonoBehaviour
         placeholder.SetTransformMatrix(tr, Matrix4x4.Rotate(Quaternion.Euler(0f, 0f, 270f)));
         placeholder.SetTransformMatrix(br, bottomRotMat);
     }
+
+    public void CameraCeleste() {
+        cam.transform.position = new Vector3(15.5f, 11.2f, -10);
+        cam.orthographicSize = 14.5f;
+    }
 }
