@@ -63,7 +63,15 @@ public class CelesteWFC : MonoBehaviour
             return;
         }
 
-        wfc.Iterate();
+        if (editor.SelectedPos.HasValue) {
+            var pos = editor.SelectedPos.Value;
+            wfc.Iterate(pos.x, pos.y);
+            editor.ClearSelectedTile();
+        }
+        else {
+            wfc.Iterate();
+        }
+
         Paint();
     }
 

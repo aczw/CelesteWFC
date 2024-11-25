@@ -25,12 +25,13 @@ using UnityEngine.Tilemaps;
 public class GridEditor : MonoBehaviour
 {
     private bool IsEditingGridSize { get; set; }
+    public Vector3Int? SelectedPos { get; private set; }
 
     public TMP_InputField widthInput;
     public TMP_InputField heightInput;
 
-    public Tilemap placeholder;
-    public Tilemap selection;
+    [SerializeField] private Tilemap placeholder;
+    [SerializeField] private Tilemap selection;
 
     public InputSettings inputSettings;
     public SelectionTiles selectionTiles;
@@ -39,10 +40,9 @@ public class GridEditor : MonoBehaviour
     private Camera cam;
     private Tilemap output;
     private Vector3Int prevHoveredTilePos;
-    private Vector3Int? selectedPos;
 
     private void Awake() {
-        selectedPos = null;
+        SelectedPos = null;
     }
 
     private void Start() {
@@ -92,10 +92,10 @@ public class GridEditor : MonoBehaviour
 
         selection.SetTile(prevHoveredTilePos, null);
 
-        if (selectedPos.HasValue) {
+        if (SelectedPos.HasValue) {
             var gb = 0.1f * Mathf.Sin(7f * Time.time) + 0.3f;
-            selection.SetTile(selectedPos.Value, selectionTiles.selected);
-            selection.SetColor(selectedPos.Value, new Color(1f, gb, gb));
+            selection.SetTile(SelectedPos.Value, selectionTiles.selected);
+            selection.SetColor(SelectedPos.Value, new Color(1f, gb, gb));
         }
 
         cam.orthographicSize += -Input.GetAxis("Mouse ScrollWheel") * inputSettings.scrollFactor;
@@ -112,18 +112,14 @@ public class GridEditor : MonoBehaviour
 
         if (tilePos.x >= 0 && tilePos.x < CelesteWFC.I.gridSettings.width
                            && tilePos.y >= 0 && tilePos.y < CelesteWFC.I.gridSettings.height) {
-            if (tilePos == selectedPos) {
-                if (Input.GetMouseButtonDown(0)) {
-                    selection.SetTile(selectedPos.Value, null);
-                    selectedPos = null;
-                }
-
+            if (tilePos == SelectedPos) {
+                if (Input.GetMouseButtonDown(0)) ClearSelectedTile();
                 return;
             }
 
             if (Input.GetMouseButtonDown(0)) {
-                selection.SetTile(selectedPos ?? new Vector3Int(-1, -1, 0), null);
-                selectedPos = tilePos;
+                selection.SetTile(SelectedPos ?? new Vector3Int(-1, -1, 0), null);
+                SelectedPos = tilePos;
             }
             else {
                 selection.SetTile(tilePos, selectionTiles.hover);
@@ -142,6 +138,12 @@ public class GridEditor : MonoBehaviour
                 placeholder.SetColor(position, transparent);
             }
         }
+    }
+
+    public void ClearSelectedTile() {
+        // If the selected tile is already cleared, just clear something outside the grid
+        selection.SetTile(SelectedPos ?? new Vector3Int(-1, -1, 0), null);
+        SelectedPos = null;
     }
 
     public void RedrawPlaceholder() {

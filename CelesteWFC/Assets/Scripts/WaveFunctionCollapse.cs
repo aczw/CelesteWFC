@@ -207,7 +207,12 @@ public class WaveFunctionCollapse
 
     public void Iterate() {
         var nextCellToCollapse = PickLowestEntropyCell();
+        Collapse(nextCellToCollapse);
+        Propagate(nextCellToCollapse);
+    }
 
+    public void Iterate(int x, int y) {
+        var nextCellToCollapse = new Vector2Int(x, height - 1 - y);
         Collapse(nextCellToCollapse);
         Propagate(nextCellToCollapse);
     }
