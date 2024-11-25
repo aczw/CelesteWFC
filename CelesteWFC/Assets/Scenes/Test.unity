@@ -2991,7 +2991,7 @@ GameObject:
   - component: {fileID: 1851087427}
   - component: {fileID: 1851087426}
   m_Layer: 0
-  m_Name: GridEditor
+  m_Name: Grid Editor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3011,6 +3011,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   widthInput: {fileID: 282620430}
   heightInput: {fileID: 2047368658}
+  placeholder: {fileID: 1937688071}
   selection: {fileID: 134951039}
   inputSettings:
     scrollFactor: 2
@@ -3018,6 +3019,10 @@ MonoBehaviour:
   selectionTiles:
     hover: {fileID: 11400000, guid: df99673cba9516c47af294d965452d7c, type: 2}
     selected: {fileID: 11400000, guid: b451e6bf477e27f418c55baf92a789ba, type: 2}
+  placeholderTiles:
+    fill: {fileID: 11400000, guid: f13e2ab7261b46045846c173fc9387d1, type: 2}
+    line: {fileID: 11400000, guid: 73644fe7b0d0a5c46ab4fdb15090f576, type: 2}
+    corner: {fileID: 11400000, guid: bbfda00fa0cbd214ebff55239848bac0, type: 2}
 --- !u!4 &1851087427
 Transform:
   m_ObjectHideFlags: 0
@@ -3078,13 +3083,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   output: {fileID: 60413605}
-  placeholder: {fileID: 1937688071}
   palette: {fileID: 11400000, guid: 5ef72665b795a6b4090358cb8e56ab71, type: 2}
   editor: {fileID: 1851087426}
-  placeholderTiles:
-    fill: {fileID: 11400000, guid: f13e2ab7261b46045846c173fc9387d1, type: 2}
-    line: {fileID: 11400000, guid: 73644fe7b0d0a5c46ab4fdb15090f576, type: 2}
-    corner: {fileID: 11400000, guid: bbfda00fa0cbd214ebff55239848bac0, type: 2}
   gridSettings:
     width: 10
     height: 5
