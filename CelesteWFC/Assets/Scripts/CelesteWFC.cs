@@ -18,6 +18,7 @@ using UnityEngine.Tilemaps;
 public class CelesteWFC : MonoBehaviour
 {
     public static CelesteWFC I { get; private set; }
+    public bool IsEditingGridSize { get; set; }
 
     [SerializeField] private Tilemap output;
     [SerializeField] private Tilemap placeholder;
@@ -47,10 +48,12 @@ public class CelesteWFC : MonoBehaviour
     }
 
     private void Update() {
-        var color = new Color(1f, 1f, 1f, 0.1f * Mathf.Sin(5f * Time.time) + 0.3f);
+        if (!IsEditingGridSize) return;
+
+        var color = new Color(1f, 1f, 1f, 0.15f * Mathf.Sin(7f * Time.time) + 0.3f);
         for (var y = 0; y < wfc.height; ++y) {
             for (var x = 0; x < wfc.width; ++x) {
-                if (wfc.grid[wfc.height - y - 1, x].IsCollapsed) continue;
+                if (wfc.grid[wfc.height - 1 - y, x].IsCollapsed) continue;
                 placeholder.SetColor(new Vector3Int(x, y, 0), color);
             }
         }
@@ -83,15 +86,7 @@ public class CelesteWFC : MonoBehaviour
 
     private void RedrawPlaceholder() {
         placeholder.ClearAllTiles();
-
-        var transparent = new Color(1f, 1f, 1f, 0.3f);
-        for (var y = 0; y < wfc.height; ++y) {
-            for (var x = 0; x < wfc.width; ++x) {
-                var position = new Vector3Int(x, y, 0);
-                placeholder.SetTile(position, placeholderTiles.fill);
-                placeholder.SetColor(position, transparent);
-            }
-        }
+        SetDefaultPlaceholderFillColor();
 
         // Draw top and bottom borders
         var bottomRotMat = Matrix4x4.Rotate(Quaternion.Euler(0f, 0f, 180f));
@@ -128,6 +123,17 @@ public class CelesteWFC : MonoBehaviour
         placeholder.SetTransformMatrix(bl, leftRotMat);
         placeholder.SetTransformMatrix(tr, Matrix4x4.Rotate(Quaternion.Euler(0f, 0f, 270f)));
         placeholder.SetTransformMatrix(br, bottomRotMat);
+    }
+
+    public void SetDefaultPlaceholderFillColor() {
+        var transparent = new Color(1f, 1f, 1f, 0.3f);
+        for (var y = 0; y < wfc.height; ++y) {
+            for (var x = 0; x < wfc.width; ++x) {
+                var position = new Vector3Int(x, y, 0);
+                placeholder.SetTile(position, placeholderTiles.fill);
+                placeholder.SetColor(position, transparent);
+            }
+        }
     }
 
     public void Iterate() {

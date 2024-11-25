@@ -18,6 +18,10 @@ public class GridEditor : MonoBehaviour
 
     private void Start() {
         cam = Camera.main;
+
+        widthInput.onSelect.AddListener(_ => CelesteWFC.I.IsEditingGridSize = true);
+        heightInput.onSelect.AddListener(_ => CelesteWFC.I.IsEditingGridSize = true);
+
         widthInput.onEndEdit.AddListener(width => {
             if (string.IsNullOrWhiteSpace(width)) {
                 widthInput.text = CelesteWFC.I.gridSettings.width.ToString();
@@ -25,6 +29,9 @@ public class GridEditor : MonoBehaviour
             else {
                 CelesteWFC.I.ResizeWidth(int.Parse(width));
             }
+
+            CelesteWFC.I.IsEditingGridSize = false;
+            CelesteWFC.I.SetDefaultPlaceholderFillColor();
         });
         heightInput.onEndEdit.AddListener(height => {
             if (string.IsNullOrWhiteSpace(height)) {
@@ -33,6 +40,9 @@ public class GridEditor : MonoBehaviour
             else {
                 CelesteWFC.I.ResizeHeight(int.Parse(height));
             }
+
+            CelesteWFC.I.IsEditingGridSize = false;
+            CelesteWFC.I.SetDefaultPlaceholderFillColor();
         });
     }
 
