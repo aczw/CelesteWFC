@@ -2,6 +2,8 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 [Serializable] public struct InputSettings
 {
@@ -32,6 +34,8 @@ public class GridEditor : MonoBehaviour
 
     [SerializeField] private Tilemap placeholder;
     [SerializeField] private Tilemap selection;
+    [SerializeField] private GameObject content;
+    [SerializeField] private MouseDetection UI;
 
     public InputSettings inputSettings;
     public SelectionTiles selectionTiles;
@@ -41,11 +45,23 @@ public class GridEditor : MonoBehaviour
     private Tilemap output;
     private Vector3Int prevHoveredTilePos;
 
+    public GameObject prefab;
+    public int numToCreate;
+
     private void Awake() {
         SelectedPos = null;
     }
 
+    private void Populate() {
+        for (var i = 0; i < numToCreate; ++i) {
+            var obj = Instantiate(prefab, content.transform);
+            obj.GetComponent<Image>().color = Random.ColorHSV();
+        }
+    }
+
     private void Start() {
+        Populate();
+
         // Clears any placeholders for the placeholder in the editor....
         RedrawPlaceholder();
 
@@ -97,6 +113,9 @@ public class GridEditor : MonoBehaviour
             selection.SetTile(SelectedPos.Value, selectionTiles.selected);
             selection.SetColor(SelectedPos.Value, new Color(1f, gb, gb));
         }
+
+        // Only do input stuff if mouse is not currently over the side UI
+        if (UI.IsHoveringOver) return;
 
         cam.orthographicSize += -Input.GetAxis("Mouse ScrollWheel") * inputSettings.scrollFactor;
         if (Input.GetMouseButton(1) || Input.GetMouseButton(2)) {
