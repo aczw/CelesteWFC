@@ -1370,7 +1370,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Step / Collapse
+  m_text: Step / Iterate
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2356,7 +2356,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Generate / Solve!
+  m_text: Generate!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3533,8 +3533,11 @@ MonoBehaviour:
   heightInput: {fileID: 2047368658}
   placeholder: {fileID: 1937688071}
   selection: {fileID: 134951039}
-  content: {fileID: 896662487}
   UI: {fileID: 287298492}
+  content: {fileID: 896662487}
+  buttonPrefab: {fileID: 8292230332748640516, guid: b23bc061cf5948743b2af4422420a47a, type: 3}
+  step: {fileID: 329021940}
+  solve: {fileID: 951715134}
   inputSettings:
     scrollFactor: 2
     sensitivity: 0.5
@@ -3545,8 +3548,6 @@ MonoBehaviour:
     fill: {fileID: 11400000, guid: f13e2ab7261b46045846c173fc9387d1, type: 2}
     line: {fileID: 11400000, guid: 73644fe7b0d0a5c46ab4fdb15090f576, type: 2}
     corner: {fileID: 11400000, guid: bbfda00fa0cbd214ebff55239848bac0, type: 2}
-  prefab: {fileID: 7708250151432955574, guid: caf7d3b60e2a444469ee020643d5bdaf, type: 3}
-  numToCreate: 20
 --- !u!4 &1851087427
 Transform:
   m_ObjectHideFlags: 0

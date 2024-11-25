@@ -3,7 +3,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 [Serializable] public struct InputSettings
 {
@@ -31,37 +30,27 @@ public class GridEditor : MonoBehaviour
 
     public TMP_InputField widthInput;
     public TMP_InputField heightInput;
+    public TMP_Text solve;
+    public TMP_Text step;
 
     [SerializeField] private Tilemap placeholder;
     [SerializeField] private Tilemap selection;
-    [SerializeField] private GameObject content;
     [SerializeField] private MouseDetection UI;
-
-    public InputSettings inputSettings;
-    public SelectionTiles selectionTiles;
-    public PlaceholderTiles placeholderTiles;
+    [SerializeField] private GameObject content;
+    [SerializeField] private GameObject buttonPrefab;
+    [SerializeField] private InputSettings inputSettings;
+    [SerializeField] private SelectionTiles selectionTiles;
+    [SerializeField] private PlaceholderTiles placeholderTiles;
 
     private Camera cam;
     private Tilemap output;
     private Vector3Int prevHoveredTilePos;
 
-    public GameObject prefab;
-    public int numToCreate;
-
     private void Awake() {
         SelectedPos = null;
     }
 
-    private void Populate() {
-        for (var i = 0; i < numToCreate; ++i) {
-            var obj = Instantiate(prefab, content.transform);
-            obj.GetComponent<Image>().color = Random.ColorHSV();
-        }
-    }
-
     private void Start() {
-        Populate();
-
         // Clears any placeholders for the placeholder in the editor....
         RedrawPlaceholder();
 
@@ -132,18 +121,49 @@ public class GridEditor : MonoBehaviour
         if (tilePos.x >= 0 && tilePos.x < CelesteWFC.I.gridSettings.width
                            && tilePos.y >= 0 && tilePos.y < CelesteWFC.I.gridSettings.height) {
             if (tilePos == SelectedPos) {
-                if (Input.GetMouseButtonDown(0)) ClearSelectedTile();
+                // Unselect currently selected tile
+                if (Input.GetMouseButtonDown(0)) {
+                    ClearContent();
+                    ClearSelectedTile();
+                    step.text = "Step / Iterate";
+                }
+
                 return;
             }
 
             if (Input.GetMouseButtonDown(0)) {
                 selection.SetTile(SelectedPos ?? new Vector3Int(-1, -1, 0), null);
                 SelectedPos = tilePos;
+                step.text = "Collapse this tile!";
+                Populate(tilePos.x, tilePos.y);
             }
             else {
                 selection.SetTile(tilePos, selectionTiles.hover);
                 selection.SetColor(tilePos, new Color(1f, 1f, 1f, 0.3f));
                 prevHoveredTilePos = tilePos;
+            }
+        }
+    }
+
+    private void Populate(int x, int y) {
+        // Clears the children from the content GameObject before repopulating it.
+        ClearContent();
+
+        var cell = CelesteWFC.I.GetCell(x, y);
+        foreach (var state in cell.states) {
+            var tile = (Tile)state.tile;
+            var obj = Instantiate(buttonPrefab, content.transform);
+
+            obj.GetComponent<RectTransform>().Rotate(0f, 0f, -90f * state.timesRotatedClockwise);
+            obj.GetComponent<Image>().sprite = tile.sprite;
+
+            var button = obj.GetComponent<Button>();
+            if (cell.IsCollapsed) {
+                button.enabled = false;
+                obj.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.35f);
+            }
+            else {
+                button.onClick.AddListener(() => CelesteWFC.I.Iterate(x, y, state));
             }
         }
     }
@@ -157,6 +177,10 @@ public class GridEditor : MonoBehaviour
                 placeholder.SetColor(position, transparent);
             }
         }
+    }
+
+    public void ClearContent() {
+        foreach (Transform child in content.transform) Destroy(child.gameObject);
     }
 
     public void ClearSelectedTile() {

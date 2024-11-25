@@ -66,12 +66,24 @@ public class CelesteWFC : MonoBehaviour
         if (editor.SelectedPos.HasValue) {
             var pos = editor.SelectedPos.Value;
             wfc.Iterate(pos.x, pos.y);
+            editor.ClearContent();
             editor.ClearSelectedTile();
+            editor.step.text = "Step / Iterate";
         }
         else {
             wfc.Iterate();
         }
 
+        editor.solve.text = "Finish solving!";
+        Paint();
+    }
+
+    public void Iterate(int x, int y, State state) {
+        wfc.Iterate(x, y, state);
+        editor.ClearContent();
+        editor.ClearSelectedTile();
+        editor.solve.text = "Finish solving!";
+        editor.step.text = "Step / Iterate";
         Paint();
     }
 
@@ -86,6 +98,10 @@ public class CelesteWFC : MonoBehaviour
     public void Reset() {
         wfc = new WaveFunctionCollapse(gridSettings.width, gridSettings.height, palette);
 
+        editor.ClearContent();
+        editor.ClearSelectedTile();
+        editor.solve.text = "Generate!";
+        editor.step.text = "Step / Iterate";
         output.ClearAllTiles();
         Paint();
     }
@@ -110,5 +126,10 @@ public class CelesteWFC : MonoBehaviour
 
     public bool IsCollapsed(int x, int y) {
         return wfc.grid[y, x].IsCollapsed;
+    }
+
+    // Makes a copy of the cell's states.
+    public Cell GetCell(int x, int y) {
+        return wfc.grid[wfc.height - 1 - y, x];
     }
 }

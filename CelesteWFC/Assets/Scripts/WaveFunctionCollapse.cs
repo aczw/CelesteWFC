@@ -205,16 +205,28 @@ public class WaveFunctionCollapse
         }
     }
 
+    // Let algorithm decide coordinate and state
     public void Iterate() {
         var nextCellToCollapse = PickLowestEntropyCell();
         Collapse(nextCellToCollapse);
         Propagate(nextCellToCollapse);
     }
 
+    // Let algorithm decide the state
     public void Iterate(int x, int y) {
         var nextCellToCollapse = new Vector2Int(x, height - 1 - y);
         Collapse(nextCellToCollapse);
         Propagate(nextCellToCollapse);
+    }
+
+    // Specifically pick a coordinate and state to collapse to
+    public void Iterate(int x, int y, State state) {
+        var pos = new Vector2Int(x, height - 1 - y);
+        var cellStates = grid[height - 1 - y, x].states;
+
+        cellStates.Clear();
+        cellStates.Add(state);
+        Propagate(pos);
     }
 
     public bool IsCollapsed() {
