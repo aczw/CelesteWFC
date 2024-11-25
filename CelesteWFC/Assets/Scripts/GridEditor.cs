@@ -18,8 +18,22 @@ public class GridEditor : MonoBehaviour
 
     private void Start() {
         cam = Camera.main;
-        widthInput.onEndEdit.AddListener(width => CelesteWFC.I.ResizeWidth(int.Parse(width)));
-        heightInput.onEndEdit.AddListener(height => CelesteWFC.I.ResizeHeight(int.Parse(height)));
+        widthInput.onEndEdit.AddListener(width => {
+            if (string.IsNullOrWhiteSpace(width)) {
+                widthInput.text = CelesteWFC.I.gridSettings.width.ToString();
+            }
+            else {
+                CelesteWFC.I.ResizeWidth(int.Parse(width));
+            }
+        });
+        heightInput.onEndEdit.AddListener(height => {
+            if (string.IsNullOrWhiteSpace(height)) {
+                heightInput.text = CelesteWFC.I.gridSettings.height.ToString();
+            }
+            else {
+                CelesteWFC.I.ResizeHeight(int.Parse(height));
+            }
+        });
     }
 
     private void Update() {
