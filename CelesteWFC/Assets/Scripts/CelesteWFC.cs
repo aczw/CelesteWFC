@@ -10,14 +10,26 @@ using UnityEngine.Tilemaps;
 
 public class CelesteWFC : MonoBehaviour
 {
+    public static CelesteWFC I { get; private set; }
+
     [SerializeField] private Tilemap tilemap;
     [SerializeField] private Palette palette;
+    [SerializeField] private GridEditor editor;
     [SerializeField] private GridSize gridSettings;
 
     private WaveFunctionCollapse wfc;
 
     private void Awake() {
+        if (I == null) {
+            I = this;
+        }
+        else {
+            Destroy(gameObject);
+        }
+
         wfc = new WaveFunctionCollapse(gridSettings.width, gridSettings.height, palette);
+        editor.widthInput.text = gridSettings.width.ToString();
+        editor.heightInput.text = gridSettings.height.ToString();
     }
 
     /// <summary>
@@ -65,6 +77,23 @@ public class CelesteWFC : MonoBehaviour
 
     public void Reset() {
         wfc = new WaveFunctionCollapse(gridSettings.width, gridSettings.height, palette);
+
+        tilemap.ClearAllTiles();
+        Paint();
+    }
+
+    public void ResizeWidth(int width) {
+        wfc = new WaveFunctionCollapse(width, gridSettings.height, palette);
+        gridSettings.width = width;
+
+        tilemap.ClearAllTiles();
+        Paint();
+    }
+
+    public void ResizeHeight(int height) {
+        wfc = new WaveFunctionCollapse(gridSettings.width, height, palette);
+        gridSettings.height = height;
+
         tilemap.ClearAllTiles();
         Paint();
     }
