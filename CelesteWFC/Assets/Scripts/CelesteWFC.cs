@@ -20,9 +20,8 @@ public class CelesteWFC : MonoBehaviour
     public static CelesteWFC I { get; private set; }
     public bool IsEditingGridSize { get; set; }
 
-    [SerializeField] private Tilemap output;
+    public Tilemap output;
     [SerializeField] private Tilemap placeholder;
-
     [SerializeField] private Palette palette;
     [SerializeField] private GridEditor editor;
 
