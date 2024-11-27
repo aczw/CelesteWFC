@@ -107,6 +107,8 @@ Using a simple tile palette made out of interconnecting pipes, I'm already able 
 
 For my second milestone I mostly worked on the grid editor and the tile constraining functionality. There's an actual UI now, and you're able to select a tile from the grid and pick from one of its possible states to collapse to.
 
+https://github.com/user-attachments/assets/4adc989e-292f-44eb-bcf7-442bf15f3ce4
+
 > *Video can also be found in `media/` folder, called `milestone2.mp4`.*
 
 I was not able to finish all the goals I set. Namely, importing the Celeste tileset as well as the player controller. The grid editor took more time than expected to implement, and honestly I think I tried doing too much at once. Timeline wise I should still be fine, because my generator is 100% done and my plans for the final week were bugfixing and polish, so I'm not too far behind.
