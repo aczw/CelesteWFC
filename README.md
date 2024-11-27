@@ -95,8 +95,6 @@ I made a lot of dumb mistakes and spent a lot of time debugging issues that turn
 
 Using a simple tile palette made out of interconnecting pipes, I'm already able to generate interesting-looking patterns. I took the opportunity to also implement some milestone 2 features early, including the ability to specify grid width/height and the ability to "step" through iterations of the algorithm (instead of it all being solved at once). All of these helped with debugging. Take a look:
 
-
-
 | ![](media/m1/5x5.png) | ![](media/m1/12x6.png) |
 |-------|------|
 | A simple 5x5 grid. | 12x6 grid. |
@@ -104,3 +102,13 @@ Using a simple tile palette made out of interconnecting pipes, I'm already able 
 | Another 12x6 grid. Simply hit Reset and Solve again. | 100x100 grid, just because I can. (You might want to zoom in.) |
 | ![](media/m1/8x4_step.png) |
 | You can also step through each iteration step individually. Here the algorithm is in the middle of generating a 8x4 grid. |
+
+## Milestone 2
+
+For my second milestone I mostly worked on the grid editor and the tile constraining functionality. There's an actual UI now, and you're able to select a tile from the grid and pick from one of its possible states to collapse to.
+
+> *Video can also be found in `media/` folder, called `milestone2.mp4`.*
+
+I was not able to finish all the goals I set. Namely, importing the Celeste tileset as well as the player controller. The grid editor took more time than expected to implement, and honestly I think I tried doing too much at once. Timeline wise I should still be fine, because my generator is 100% done and my plans for the final week were bugfixing and polish, so I'm not too far behind.
+
+I've also begun looking for Celeste's tilesets already. Out of all places I found this [premade Celeste tileset](https://gamebanana.com/tools/13614) for Pizza Tower, which has everything I need. As for the player controller, I'll basically be copying the video I listed in my references above.
