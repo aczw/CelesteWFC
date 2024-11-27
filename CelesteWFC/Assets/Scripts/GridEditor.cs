@@ -90,7 +90,7 @@ public class GridEditor : MonoBehaviour
             for (var y = 0; y < CelesteWFC.I.gridSettings.height; ++y) {
                 for (var x = 0; x < CelesteWFC.I.gridSettings.width; ++x) {
                     if (CelesteWFC.I.IsCollapsed(x, y)) continue;
-                    placeholder.SetColor(new Vector3Int(x, y, 0), color);
+                    placeholder.SetColor(new Vector3Int(x, CelesteWFC.I.gridSettings.height - 1 - y, 0), color);
                 }
             }
         }
