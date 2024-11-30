@@ -72,6 +72,14 @@ public class Cell
 
             return statesFromTile;
         }).ToList();
+
+        // Add a state that contains a `null` TileBase representing a blank tile
+        states.Add(new State {
+            tile = TileInfo.Blank.tile,
+            tileName = TileInfo.Blank.tileName,
+            socket = TileInfo.Blank.originalSocket,
+            timesRotatedClockwise = 0
+        });
     }
 
     public bool IsCollapsed => states.Count == 1;

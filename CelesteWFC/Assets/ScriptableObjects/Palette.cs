@@ -34,6 +34,19 @@ public enum SymmetryType
     public SymmetryType symmetry;
     public bool disabled;
     public Socket originalSocket;
+
+    public static TileInfo Blank = new() {
+        tileName = "Blank",
+        tile = null,
+        symmetry = SymmetryType.X,
+        disabled = false,
+        originalSocket = new Socket {
+            up = false,
+            down = false,
+            left = false,
+            right = false
+        }
+    };
 }
 
 /// <summary>

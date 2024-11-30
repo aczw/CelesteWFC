@@ -141,7 +141,6 @@ public class CelesteWFC : MonoBehaviour
         return wfc.grid[y, x].IsCollapsed;
     }
 
-    // Makes a copy of the cell's states.
     public Cell GetCell(int x, int y) {
         return wfc.grid[wfc.height - 1 - y, x];
     }
