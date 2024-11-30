@@ -9,17 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee118c76023b89444bf2462f628a3f7a, type: 3}
+  m_Script: {fileID: 11500000, guid: 866be0a7b79250a40a00275a1c7cea2b, type: 3}
   m_Name: Forsaken City
   m_EditorClassIdentifier: 
-  paletteName: Forsaken City
-  tiles:
-  - tileName: 
-    tile: {fileID: 0}
-    symmetry: 0
-    disabled: 0
-    originalSocket:
-      up: 0
-      down: 0
-      left: 0
-      right: 0
+  setName: Forsaken City
+  fillFalseSockets: 0
+  palettes:
+  - {fileID: 11400000, guid: 5ef72665b795a6b4090358cb8e56ab71, type: 2}

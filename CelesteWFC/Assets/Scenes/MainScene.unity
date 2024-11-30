@@ -3746,7 +3746,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   output: {fileID: 60413605}
-  palette: {fileID: 11400000, guid: 5ef72665b795a6b4090358cb8e56ab71, type: 2}
+  paletteSet: {fileID: 11400000, guid: e8c04e86da00cdd4d8c7c4b56a1c3ef7, type: 2}
   editor: {fileID: 1851087426}
   gridSettings:
     width: 10

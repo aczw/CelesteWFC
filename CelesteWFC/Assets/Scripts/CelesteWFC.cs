@@ -13,7 +13,7 @@ public class CelesteWFC : MonoBehaviour
     public static CelesteWFC I { get; private set; }
 
     public Tilemap output;
-    public Palette palette;
+    public PaletteSet paletteSet;
     public GridEditor editor;
     public GridSize gridSettings;
 
@@ -27,7 +27,7 @@ public class CelesteWFC : MonoBehaviour
             Destroy(gameObject);
         }
 
-        wfc = new WaveFunctionCollapse(gridSettings.width, gridSettings.height, palette);
+        wfc = new WaveFunctionCollapse(gridSettings.width, gridSettings.height, paletteSet);
         editor.widthInput.text = gridSettings.width.ToString();
         editor.heightInput.text = gridSettings.height.ToString();
     }
@@ -96,7 +96,7 @@ public class CelesteWFC : MonoBehaviour
     }
 
     public void Reset() {
-        wfc = new WaveFunctionCollapse(gridSettings.width, gridSettings.height, palette);
+        wfc = new WaveFunctionCollapse(gridSettings.width, gridSettings.height, paletteSet);
 
         editor.ClearContent();
         editor.ClearSelectedTile();
@@ -107,7 +107,7 @@ public class CelesteWFC : MonoBehaviour
     }
 
     public void ResizeWidth(int width) {
-        wfc = new WaveFunctionCollapse(width, gridSettings.height, palette);
+        wfc = new WaveFunctionCollapse(width, gridSettings.height, paletteSet);
         gridSettings.width = width;
 
         output.ClearAllTiles();
@@ -116,7 +116,7 @@ public class CelesteWFC : MonoBehaviour
     }
 
     public void ResizeHeight(int height) {
-        wfc = new WaveFunctionCollapse(gridSettings.width, height, palette);
+        wfc = new WaveFunctionCollapse(gridSettings.width, height, paletteSet);
         gridSettings.height = height;
 
         output.ClearAllTiles();
@@ -125,7 +125,7 @@ public class CelesteWFC : MonoBehaviour
     }
 
     public void ResizeCeleste() {
-        wfc = new WaveFunctionCollapse(40, 23, palette);
+        wfc = new WaveFunctionCollapse(40, 23, paletteSet);
         gridSettings.width = 40;
         gridSettings.height = 23;
         editor.widthInput.text = "40";

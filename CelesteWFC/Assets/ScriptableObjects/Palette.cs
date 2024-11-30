@@ -27,6 +27,9 @@ public enum SymmetryType
     }
 }
 
+/// <summary>
+///     Stores the Tile along with additional metadata to help the algorithm collapse and propagate this tile.
+/// </summary>
 [Serializable] public struct TileInfo
 {
     public string tileName;
@@ -50,9 +53,8 @@ public enum SymmetryType
 }
 
 /// <summary>
-///     Used to store a set of tiles that a grid can output along with additional cell information to help the algorithm
-///     collapse and propagate. It's designed to be "plug and chug" as you can switch out a ScriptableObject for another
-///     so that CelesteWFC uses a different set of tiles with different rules.
+///     Used to store a set of tiles that come from a single source/spritesheet. This becomes important later for
+///     grouping/socket purposes.
 /// </summary>
 [CreateAssetMenu(fileName = "Palette", menuName = "ScriptableObjects/Palette")]
 public class Palette : ScriptableObject

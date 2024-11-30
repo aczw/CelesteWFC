@@ -9,6 +9,7 @@ public struct State
 {
     public TileBase tile;
     public string tileName;
+    public string palette;
 
     public Socket socket;
     public int timesRotatedClockwise;
@@ -35,51 +36,57 @@ public class Cell
 {
     public List<State> states;
 
-    public Cell(in List<TileInfo> tileInfo) {
-        states = tileInfo.SelectMany(ti => {
-            if (ti.disabled) return new List<State>();
+    public Cell(in PaletteSet paletteSet) {
+        states = new List<State>();
 
-            var currState = new State {
-                tile = ti.tile,
-                tileName = ti.tileName,
-                socket = ti.originalSocket,
-                timesRotatedClockwise = 0
-            };
+        paletteSet.palettes.ForEach(p => {
+            states.AddRange(p.tiles.SelectMany(ti => {
+                if (ti.disabled) return new List<State>();
 
-            // Add original state to list first
-            var statesFromTile = new List<State> { currState };
+                var currState = new State {
+                    tile = ti.tile,
+                    tileName = ti.tileName,
+                    socket = ti.originalSocket,
+                    timesRotatedClockwise = 0
+                };
 
-            switch (ti.symmetry) {
-            case SymmetryType.T:
-            case SymmetryType.L:
-                for (var i = 0; i < 3; ++i) {
+                // Add original state to list first
+                var statesFromTile = new List<State> { currState };
+
+                switch (ti.symmetry) {
+                case SymmetryType.T:
+                case SymmetryType.L:
+                    for (var i = 0; i < 3; ++i) {
+                        currState = State.RotateClockwise(ref currState);
+                        statesFromTile.Add(currState);
+                    }
+
+                    break;
+
+                case SymmetryType.I:
                     currState = State.RotateClockwise(ref currState);
                     statesFromTile.Add(currState);
+                    break;
+
+                // X-type tiles don't need to be rotated
+                case SymmetryType.X:
+                default:
+                    break;
                 }
 
-                break;
-
-            case SymmetryType.I:
-                currState = State.RotateClockwise(ref currState);
-                statesFromTile.Add(currState);
-                break;
-
-            // X-type tiles don't need to be rotated
-            case SymmetryType.X:
-            default:
-                break;
-            }
-
-            return statesFromTile;
-        }).ToList();
+                return statesFromTile;
+            }).ToList());
+        });
 
         // Add a state that contains a `null` TileBase representing a blank tile
-        states.Add(new State {
-            tile = TileInfo.Blank.tile,
-            tileName = TileInfo.Blank.tileName,
-            socket = TileInfo.Blank.originalSocket,
-            timesRotatedClockwise = 0
-        });
+        if (!paletteSet.fillFalseSockets) {
+            states.Add(new State {
+                tile = TileInfo.Blank.tile,
+                tileName = TileInfo.Blank.tileName,
+                socket = TileInfo.Blank.originalSocket,
+                timesRotatedClockwise = 0
+            });
+        }
     }
 
     public bool IsCollapsed => states.Count == 1;
@@ -109,14 +116,14 @@ public class WaveFunctionCollapse
         (NeighborLocation.Left, new Vector2Int(-1, 0)), (NeighborLocation.Right, new Vector2Int(1, 0))
     };
 
-    public WaveFunctionCollapse(int width, int height, Palette palette) {
+    public WaveFunctionCollapse(int width, int height, PaletteSet paletteSet) {
         grid = new Cell[height, width];
         this.width = width;
         this.height = height;
 
         for (var y = 0; y < height; ++y) {
             for (var x = 0; x < width; ++x) {
-                grid[y, x] = new Cell(palette.tiles);
+                grid[y, x] = new Cell(paletteSet);
             }
         }
     }
