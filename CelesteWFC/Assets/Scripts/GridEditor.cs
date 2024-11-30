@@ -38,6 +38,7 @@ public class GridEditor : MonoBehaviour
     [SerializeField] private MouseDetection UI;
     [SerializeField] private GameObject content;
     [SerializeField] private GameObject buttonPrefab;
+    [SerializeField] private Sprite blank;
     [SerializeField] private InputSettings inputSettings;
     [SerializeField] private SelectionTiles selectionTiles;
     [SerializeField] private PlaceholderTiles placeholderTiles;
@@ -151,11 +152,12 @@ public class GridEditor : MonoBehaviour
 
         var cell = CelesteWFC.I.GetCell(x, y);
         foreach (var state in cell.states) {
+            // This is safe because we only store sprites inside Tiles
             var tile = (Tile)state.tile;
             var obj = Instantiate(buttonPrefab, content.transform);
 
             obj.GetComponent<RectTransform>().Rotate(0f, 0f, -90f * state.timesRotatedClockwise);
-            obj.GetComponent<Image>().sprite = tile.sprite;
+            obj.GetComponent<Image>().sprite = tile != null ? tile.sprite : blank;
 
             var button = obj.GetComponent<Button>();
             if (cell.IsCollapsed) {

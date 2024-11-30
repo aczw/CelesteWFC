@@ -3675,6 +3675,7 @@ MonoBehaviour:
   UI: {fileID: 287298492}
   content: {fileID: 896662487}
   buttonPrefab: {fileID: 8292230332748640516, guid: b23bc061cf5948743b2af4422420a47a, type: 3}
+  blank: {fileID: 21300000, guid: c03bedc1d6b8e604886b372e07992545, type: 3}
   inputSettings:
     scrollFactor: 2
     sensitivity: 0.5
