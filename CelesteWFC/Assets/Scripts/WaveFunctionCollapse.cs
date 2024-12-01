@@ -7,20 +7,19 @@ using Random = UnityEngine.Random;
 
 public struct State
 {
-    public TileBase tile;
-    public string tileName;
-    public string palette;
+    public Tile tile;
+    public string paletteName;
 
     public Socket socket;
     public int timesRotatedClockwise;
 
-    public static State RotateClockwise(ref State state) {
-        ref var socket = ref state.socket;
+    public static State RotateClockwise(in State state) {
+        var socket = state.socket;
         var temp = socket.up;
 
         return new State {
             tile = state.tile,
-            tileName = state.tileName,
+            paletteName = state.paletteName,
             socket = new Socket {
                 up = socket.left,
                 left = socket.down,
@@ -28,6 +27,72 @@ public struct State
                 right = temp
             },
             timesRotatedClockwise = (state.timesRotatedClockwise + 1) % 4
+        };
+    }
+}
+
+/// <summary>
+///     <para>
+///         This class checks whether sockets between the current and neighbor cell are "valid." Validity can mean
+///         different things depending on what <see cref="PaletteType" /> we're using.
+///     </para>
+///     <para>
+///         Currently, there are two types:
+///         <ul>
+///             <li>
+///                 <see cref="PaletteType.Single" />: true if both socket IDs are equal. Note this means two invalid
+///                 sockets will also return true. This is fine for <see cref="PaletteSet" />s that only have one
+///                 <see cref="Palette" />.
+///             </li>
+///             <li>
+///                 <see cref="PaletteType.Multiple" />: assumes we're dealing with multiple palettes. Therefore, there are
+///                 two ways to be valid: if both are from the palette and have valid, equal socket IDs, or they're from
+///                 different palettes and both have invalid socket IDs (i.e. facing "away" from each other).
+///             </li>
+///         </ul>
+///     </para>
+/// </summary>
+public class NeighborValidator
+{
+    private enum PaletteType
+    {
+        Single,
+        Multiple
+    }
+
+    private readonly PaletteType type;
+
+    public NeighborValidator(bool includeFalseSockets) {
+        type = includeFalseSockets ? PaletteType.Single : PaletteType.Multiple;
+        Debug.Log(includeFalseSockets ? "Single" : "Multiple");
+    }
+
+    public bool IsValid(in NeighborLocation nbLoc, in State curr, in State nb) {
+        var fromSamePalette = curr.paletteName == nb.paletteName;
+
+        var currSocket = curr.socket;
+        var nbSocket = nb.socket;
+
+        var equalSocketIDs = nbLoc switch {
+            NeighborLocation.Up => currSocket.up == nbSocket.down,
+            NeighborLocation.Down => currSocket.down == nbSocket.up,
+            NeighborLocation.Left => currSocket.left == nbSocket.right,
+            NeighborLocation.Right => currSocket.right == nbSocket.left,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+
+        var validSocketIDs = nbLoc switch {
+            NeighborLocation.Up => currSocket.up >= 0 && nbSocket.down >= 0,
+            NeighborLocation.Down => currSocket.down >= 0 && nbSocket.up >= 0,
+            NeighborLocation.Left => currSocket.left >= 0 && nbSocket.right >= 0,
+            NeighborLocation.Right => currSocket.right >= 0 && nbSocket.left >= 0,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+
+        return type switch {
+            PaletteType.Single => equalSocketIDs,
+            PaletteType.Multiple => (fromSamePalette && equalSocketIDs) || (!fromSamePalette && !validSocketIDs),
+            _ => throw new ArgumentOutOfRangeException()
         };
     }
 }
@@ -45,7 +110,7 @@ public class Cell
 
                 var currState = new State {
                     tile = ti.tile,
-                    tileName = ti.tileName,
+                    paletteName = p.paletteName,
                     socket = ti.originalSocket,
                     timesRotatedClockwise = 0
                 };
@@ -53,18 +118,21 @@ public class Cell
                 // Add original state to list first
                 var statesFromTile = new List<State> { currState };
 
+                // If this tile can't be rotated then we immediately return here
+                if (!ti.canRotate) return statesFromTile;
+
                 switch (ti.symmetry) {
                 case SymmetryType.T:
                 case SymmetryType.L:
                     for (var i = 0; i < 3; ++i) {
-                        currState = State.RotateClockwise(ref currState);
+                        currState = State.RotateClockwise(currState);
                         statesFromTile.Add(currState);
                     }
 
                     break;
 
                 case SymmetryType.I:
-                    currState = State.RotateClockwise(ref currState);
+                    currState = State.RotateClockwise(currState);
                     statesFromTile.Add(currState);
                     break;
 
@@ -79,14 +147,19 @@ public class Cell
         });
 
         // Add a state that contains a `null` TileBase representing a blank tile
-        if (!paletteSet.fillFalseSockets) {
-            states.Add(new State {
-                tile = TileInfo.Blank.tile,
-                tileName = TileInfo.Blank.tileName,
-                socket = TileInfo.Blank.originalSocket,
-                timesRotatedClockwise = 0
-            });
-        }
+        // if (!paletteSet.fillFalseSockets) {
+        //     states.Add(new State {
+        //         tile = null,
+        //         palette = "None",
+        //         socket = new Socket {
+        //             up = true,
+        //             down = true,
+        //             left = true,
+        //             right = true
+        //         },
+        //         timesRotatedClockwise = 0
+        //     });
+        // }
     }
 
     public bool IsCollapsed => states.Count == 1;
@@ -109,6 +182,8 @@ public class WaveFunctionCollapse
     public readonly int width;
     public readonly int height;
 
+    private readonly NeighborValidator nbValidator;
+
     // Up, down, left, right neighbors. Note to self: I treat coords == indices. Since row index increases
     // going "down" this means to go up, we subtract by 1 and vice versa.
     private static readonly List<(NeighborLocation nbType, Vector2Int vec)> Offsets = new() {
@@ -116,10 +191,11 @@ public class WaveFunctionCollapse
         (NeighborLocation.Left, new Vector2Int(-1, 0)), (NeighborLocation.Right, new Vector2Int(1, 0))
     };
 
-    public WaveFunctionCollapse(int width, int height, PaletteSet paletteSet) {
+    public WaveFunctionCollapse(int width, int height, in PaletteSet paletteSet) {
         grid = new Cell[height, width];
         this.width = width;
         this.height = height;
+        nbValidator = new NeighborValidator(paletteSet.includeFalseSockets);
 
         for (var y = 0; y < height; ++y) {
             for (var x = 0; x < width; ++x) {
@@ -185,23 +261,12 @@ public class WaveFunctionCollapse
                     continue;
                 }
 
-                // Depending on the location of the neighbor cell, we match against a different predicate. This
-                // function checks whether sockets between the current and neighbor cell align. If so, then this
-                // neighbor state is valid for the current cell.
-                Func<Socket, Socket, bool> predicateFn = (curr, nb) => nbLoc switch {
-                    NeighborLocation.Up => curr.up == nb.down,
-                    NeighborLocation.Down => curr.down == nb.up,
-                    NeighborLocation.Left => curr.left == nb.right,
-                    NeighborLocation.Right => curr.right == nb.left,
-                    _ => throw new ArgumentOutOfRangeException()
-                };
-
                 // Get all valid neighbor states for all possible states of the current cell. In other words, if a
                 // neighbor socket aligns with at least *one* of the current cell's possible states, then we include it.
                 var validNeighborStates = new HashSet<State>();
                 foreach (var nbState in nbCell.states) {
                     foreach (var currState in grid[currCoords.y, currCoords.x].states) {
-                        if (predicateFn(currState.socket, nbState.socket)) {
+                        if (nbValidator.IsValid(nbLoc, currState, nbState)) {
                             validNeighborStates.Add(nbState);
                         }
                     }

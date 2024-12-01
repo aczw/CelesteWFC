@@ -70,7 +70,7 @@ public class GridEditor : MonoBehaviour
             }
 
             IsEditingGridSize = false;
-            SetDefaultPlaceholderFillColor();
+            SetDefaultPlaceholderFill();
         });
         heightInput.onEndEdit.AddListener(height => {
             if (string.IsNullOrWhiteSpace(height)) {
@@ -81,7 +81,7 @@ public class GridEditor : MonoBehaviour
             }
 
             IsEditingGridSize = false;
-            SetDefaultPlaceholderFillColor();
+            SetDefaultPlaceholderFill();
         });
     }
 
@@ -147,17 +147,15 @@ public class GridEditor : MonoBehaviour
     }
 
     private void Populate(int x, int y) {
-        // Clears the children from the content GameObject before repopulating it.
+        // Clears the children from the content GameObject before repopulating it
         ClearContent();
 
         var cell = CelesteWFC.I.GetCell(x, y);
         foreach (var state in cell.states) {
-            // This is safe because we only store sprites inside Tiles
-            var tile = (Tile)state.tile;
             var obj = Instantiate(buttonPrefab, content.transform);
 
             obj.GetComponent<RectTransform>().Rotate(0f, 0f, -90f * state.timesRotatedClockwise);
-            obj.GetComponent<Image>().sprite = tile != null ? tile.sprite : blank;
+            obj.GetComponent<Image>().sprite = state.tile != null ? state.tile.sprite : blank;
 
             var button = obj.GetComponent<Button>();
             if (cell.IsCollapsed) {
@@ -170,7 +168,7 @@ public class GridEditor : MonoBehaviour
         }
     }
 
-    private void SetDefaultPlaceholderFillColor() {
+    private void SetDefaultPlaceholderFill() {
         var transparent = new Color(1f, 1f, 1f, 0.3f);
         for (var y = 0; y < CelesteWFC.I.gridSettings.height; ++y) {
             for (var x = 0; x < CelesteWFC.I.gridSettings.width; ++x) {
@@ -193,7 +191,7 @@ public class GridEditor : MonoBehaviour
 
     public void RedrawPlaceholder() {
         placeholder.ClearAllTiles();
-        SetDefaultPlaceholderFillColor();
+        SetDefaultPlaceholderFill();
 
         var width = CelesteWFC.I.gridSettings.width;
         var height = CelesteWFC.I.gridSettings.height;

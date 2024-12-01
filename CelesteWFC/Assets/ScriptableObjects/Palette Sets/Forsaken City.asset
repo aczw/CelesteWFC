@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 866be0a7b79250a40a00275a1c7cea2b, type: 3}
   m_Name: Forsaken City
   m_EditorClassIdentifier: 
-  setName: Forsaken City
-  fillFalseSockets: 0
+  includeFalseSockets: 0
   palettes:
   - {fileID: 11400000, guid: 5ef72665b795a6b4090358cb8e56ab71, type: 2}
+  - {fileID: 11400000, guid: d5d2df78117aecb40a3b3075e96effc6, type: 2}
