@@ -5,10 +5,12 @@ using UnityEngine.Tilemaps;
 
 /// <summary>
 ///     A tile can be symmetric with respect to the following types. This affects how we rotate/transform
-///     the tile to get all possible neighbor combinations.
+///     the tile to get all possible neighbor combinations. Sometimes the tile simply can't be rotated (not symmetrical
+///     art), hence we need the first entry.
 /// </summary>
 public enum SymmetryType
 {
+    CanNotRotate,
     X,
     T,
     I,
@@ -38,9 +40,7 @@ public enum SymmetryType
 /// </summary>
 [Serializable] public struct TileInfo
 {
-    public bool disabled;
     public Tile tile;
-    public bool canRotate;
     public SymmetryType symmetry;
     public Socket originalSocket;
 }

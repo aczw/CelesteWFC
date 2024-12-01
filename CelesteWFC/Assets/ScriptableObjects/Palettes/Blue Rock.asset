@@ -14,30 +14,66 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paletteName: Blue Rock
   tiles:
-  - disabled: 0
-    tile: {fileID: 11400000, guid: beb8ebabbedabd549a91eab84998bc04, type: 2}
-    canRotate: 1
-    symmetry: 3
+  - tile: {fileID: 11400000, guid: beb8ebabbedabd549a91eab84998bc04, type: 2}
+    symmetry: 0
     originalSocket:
       up: -1
-      down: 0
+      down: 1
       left: -1
       right: 0
-  - disabled: 0
-    tile: {fileID: 11400000, guid: 481d25b776e9f5740b410aca26323413, type: 2}
-    canRotate: 1
-    symmetry: 1
+  - tile: {fileID: 11400000, guid: 481d25b776e9f5740b410aca26323413, type: 2}
+    symmetry: 0
     originalSocket:
       up: -1
       down: 1
       left: 0
       right: 0
-  - disabled: 0
-    tile: {fileID: 11400000, guid: 8e5d5600a45c34047b3c83acb2d030cb, type: 2}
-    canRotate: 1
+  - tile: {fileID: 11400000, guid: 8e5d5600a45c34047b3c83acb2d030cb, type: 2}
+    symmetry: 1
+    originalSocket:
+      up: 4
+      down: 4
+      left: 4
+      right: 4
+  - tile: {fileID: 11400000, guid: fdb2b1a21e131e44283ca87be0e18670, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: 1
+      down: -1
+      left: -1
+      right: 2
+  - tile: {fileID: 11400000, guid: 5341bff48b634aa40893fabae18162a7, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: -1
+      down: 3
+      left: 0
+      right: -1
+  - tile: {fileID: 11400000, guid: 02826330c52ab714b89c2527847fafe3, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: 3
+      down: -1
+      left: 2
+      right: -1
+  - tile: {fileID: 11400000, guid: a5370cc241f45f44a9e3b00c1016a3b7, type: 2}
     symmetry: 0
     originalSocket:
       up: 1
       down: 1
-      left: 1
-      right: 1
+      left: -1
+      right: 4
+  - tile: {fileID: 11400000, guid: 5112e10e4b505864cad3df1a9e9ced9e, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: 3
+      down: 3
+      left: 4
+      right: -1
+  - tile: {fileID: 11400000, guid: 393e55f0779185e4d81c03b80bddd256, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: 4
+      down: -1
+      left: 2
+      right: 2

@@ -100,8 +100,6 @@ public class Cell
 
         paletteSet.palettes.ForEach(p => {
             states.AddRange(p.tiles.SelectMany(ti => {
-                if (ti.disabled) return new List<State>();
-
                 var currState = new State {
                     tile = ti.tile,
                     paletteName = p.paletteName,
@@ -111,9 +109,6 @@ public class Cell
 
                 // Add original state to list first
                 var statesFromTile = new List<State> { currState };
-
-                // If this tile can't be rotated then we immediately return here
-                if (!ti.canRotate) return statesFromTile;
 
                 switch (ti.symmetry) {
                 case SymmetryType.T:
@@ -132,6 +127,7 @@ public class Cell
 
                 // X-type tiles don't need to be rotated
                 case SymmetryType.X:
+                case SymmetryType.CanNotRotate:
                 default:
                     break;
                 }
