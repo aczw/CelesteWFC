@@ -153,6 +153,8 @@ public enum NeighborLocation
 
 public class WaveFunctionCollapse
 {
+    public bool ReachedContradiction { get; private set; }
+
     public readonly Cell[,] grid;
     public readonly int width;
     public readonly int height;
@@ -230,10 +232,11 @@ public class WaveFunctionCollapse
             foreach (var (nbLoc, neighborCoords) in validNeighbors) {
                 var nbCell = grid[neighborCoords.y, neighborCoords.x];
 
-                // Not sure when this will happen. The video I was following has this though.
+                // Uh oh! If this is true it means we've reached a situation where there are *zero* valid states for this
+                // neighbor given the current cell. This means we have to restart the whole process...
                 if (nbCell.states.Count == 0) {
-                    Debug.LogWarning("Propagate(): number of states in neighbor cell is zero. Skipping this iteration");
-                    continue;
+                    ReachedContradiction = true;
+                    return;
                 }
 
                 // Get all valid neighbor states for all possible states of the current cell. In other words, if a

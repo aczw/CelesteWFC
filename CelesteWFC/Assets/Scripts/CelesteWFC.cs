@@ -60,6 +60,13 @@ public class CelesteWFC : MonoBehaviour
         }
     }
 
+    private void CheckForContradiction() {
+        if (wfc.ReachedContradiction) {
+            Debug.Log("WFC has reached a contradiction and needs to restart.");
+            Reset();
+        }
+    }
+
     public void Iterate() {
         if (wfc.IsCollapsed()) {
             Debug.Log("WFC is done!");
@@ -77,12 +84,17 @@ public class CelesteWFC : MonoBehaviour
             wfc.Iterate();
         }
 
+        CheckForContradiction();
+
         editor.solve.text = "Finish solving!";
         Paint();
     }
 
     public void Iterate(int x, int y, State state) {
         wfc.Iterate(x, y, state);
+
+        CheckForContradiction();
+
         editor.ClearContent();
         editor.ClearSelectedTile();
         editor.solve.text = "Finish solving!";
@@ -93,6 +105,7 @@ public class CelesteWFC : MonoBehaviour
     public void Solve() {
         while (!wfc.IsCollapsed()) {
             wfc.Iterate();
+            CheckForContradiction();
         }
 
         Paint();
