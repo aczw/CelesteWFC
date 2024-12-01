@@ -64,7 +64,6 @@ public class NeighborValidator
 
     public NeighborValidator(bool includeFalseSockets) {
         type = includeFalseSockets ? PaletteType.Single : PaletteType.Multiple;
-        Debug.Log(includeFalseSockets ? "Single" : "Multiple");
     }
 
     public bool IsValid(in NeighborLocation nbLoc, in State curr, in State nb) {
@@ -72,26 +71,21 @@ public class NeighborValidator
 
         var currSocket = curr.socket;
         var nbSocket = nb.socket;
-
-        var equalSocketIDs = nbLoc switch {
-            NeighborLocation.Up => currSocket.up == nbSocket.down,
-            NeighborLocation.Down => currSocket.down == nbSocket.up,
-            NeighborLocation.Left => currSocket.left == nbSocket.right,
-            NeighborLocation.Right => currSocket.right == nbSocket.left,
+        var (currID, nbID) = nbLoc switch {
+            NeighborLocation.Up => (currSocket.up, nbSocket.down),
+            NeighborLocation.Down => (currSocket.down, nbSocket.up),
+            NeighborLocation.Left => (currSocket.left, nbSocket.right),
+            NeighborLocation.Right => (currSocket.right, nbSocket.left),
             _ => throw new ArgumentOutOfRangeException()
         };
 
-        var validSocketIDs = nbLoc switch {
-            NeighborLocation.Up => currSocket.up >= 0 && nbSocket.down >= 0,
-            NeighborLocation.Down => currSocket.down >= 0 && nbSocket.up >= 0,
-            NeighborLocation.Left => currSocket.left >= 0 && nbSocket.right >= 0,
-            NeighborLocation.Right => currSocket.right >= 0 && nbSocket.left >= 0,
-            _ => throw new ArgumentOutOfRangeException()
-        };
+        var equalSocketIDs = currID == nbID;
+        var validSocketIDs = currID >= 0 && nbID >= 0;
 
         return type switch {
             PaletteType.Single => equalSocketIDs,
-            PaletteType.Multiple => (fromSamePalette && equalSocketIDs) || (!fromSamePalette && !validSocketIDs),
+            PaletteType.Multiple => (fromSamePalette && equalSocketIDs && validSocketIDs) ||
+                                    (!fromSamePalette && equalSocketIDs && !validSocketIDs),
             _ => throw new ArgumentOutOfRangeException()
         };
     }
@@ -145,21 +139,6 @@ public class Cell
                 return statesFromTile;
             }).ToList());
         });
-
-        // Add a state that contains a `null` TileBase representing a blank tile
-        // if (!paletteSet.fillFalseSockets) {
-        //     states.Add(new State {
-        //         tile = null,
-        //         palette = "None",
-        //         socket = new Socket {
-        //             up = true,
-        //             down = true,
-        //             left = true,
-        //             right = true
-        //         },
-        //         timesRotatedClockwise = 0
-        //     });
-        // }
     }
 
     public bool IsCollapsed => states.Count == 1;

@@ -132,6 +132,7 @@ public class GridEditor : MonoBehaviour
                 return;
             }
 
+            // We've either clicked the tile (if) or hovered over it (else)
             if (Input.GetMouseButtonDown(0)) {
                 selection.SetTile(SelectedPos ?? new Vector3Int(-1, -1, 0), null);
                 SelectedPos = tilePos;
