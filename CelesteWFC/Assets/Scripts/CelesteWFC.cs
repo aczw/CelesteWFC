@@ -62,7 +62,7 @@ public class CelesteWFC : MonoBehaviour
 
     private void CheckForContradiction() {
         if (wfc.ReachedContradiction) {
-            Debug.Log("WFC has reached a contradiction and needs to restart.");
+            Debug.Log("WFC has reached a contradiction and needs to restart. Restarting...");
             Reset();
         }
     }

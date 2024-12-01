@@ -28,33 +28,12 @@ MonoBehaviour:
       down: 4
       left: 0
       right: 0
-  - tile: {fileID: 11400000, guid: 8e5d5600a45c34047b3c83acb2d030cb, type: 2}
-    symmetry: 1
-    originalSocket:
-      up: 4
-      down: 4
-      left: 4
-      right: 4
-  - tile: {fileID: 11400000, guid: fdb2b1a21e131e44283ca87be0e18670, type: 2}
-    symmetry: 0
-    originalSocket:
-      up: 1
-      down: -1
-      left: -1
-      right: 2
   - tile: {fileID: 11400000, guid: 5341bff48b634aa40893fabae18162a7, type: 2}
     symmetry: 0
     originalSocket:
       up: -1
       down: 3
       left: 0
-      right: -1
-  - tile: {fileID: 11400000, guid: 02826330c52ab714b89c2527847fafe3, type: 2}
-    symmetry: 0
-    originalSocket:
-      up: 3
-      down: -1
-      left: 2
       right: -1
   - tile: {fileID: 11400000, guid: a5370cc241f45f44a9e3b00c1016a3b7, type: 2}
     symmetry: 0
@@ -70,10 +49,66 @@ MonoBehaviour:
       down: 3
       left: 4
       right: -1
-  - tile: {fileID: 11400000, guid: 393e55f0779185e4d81c03b80bddd256, type: 2}
+  - tile: {fileID: 11400000, guid: bb11fd10552a80841b93e290a045ff5a, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: 4
+      down: 3
+      left: 4
+      right: 2
+  - tile: {fileID: 11400000, guid: c23cd4ac5b32e2742a8ecd5b257f1ae8, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: 4
+      down: 1
+      left: 2
+      right: 4
+  - tile: {fileID: 11400000, guid: 36343bc3179ea6d498c14fbcfe27a059, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: 4
+      down: 4
+      left: 4
+      right: 4
+  - tile: {fileID: 11400000, guid: 4a6f8f7e2552ed248824f1a5a8cb408f, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: 4
+      down: 4
+      left: 4
+      right: 4
+  - tile: {fileID: 11400000, guid: 31c5bcf7dad1dbe49a09ccd5683e964b, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: 3
+      down: 4
+      left: 4
+      right: 0
+  - tile: {fileID: 11400000, guid: e99b4d947cebec9468dc85cb57bfc6bb, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: 1
+      down: 4
+      left: 0
+      right: 4
+  - tile: {fileID: 11400000, guid: fdb2b1a21e131e44283ca87be0e18670, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: 1
+      down: -1
+      left: -1
+      right: 2
+  - tile: {fileID: 11400000, guid: 85354e73c65d0574fa532bd5c9fada7d, type: 2}
     symmetry: 0
     originalSocket:
       up: 4
       down: -1
       left: 2
       right: 2
+  - tile: {fileID: 11400000, guid: 02826330c52ab714b89c2527847fafe3, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: 3
+      down: -1
+      left: 2
+      right: -1
