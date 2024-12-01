@@ -35,9 +35,8 @@ public class CelesteWFC : MonoBehaviour
     /// <summary>
     ///     <para>Draws currently collapsed tiles to the tilemap, if any.</para>
     ///     <para>
-    ///         Note: because tiles are arranged in a
-    ///         2D array, the topmost row has an index of 0; value of Y increases going <i>down</i>. This means we should
-    ///         draw the rows top down!
+    ///         Note: because tiles are arranged in a 2D array, the topmost row has an index of 0; value of Y increases going
+    ///         <i>down</i>. This means we should draw the rows top down!
     ///     </para>
     /// </summary>
     private void Paint() {

@@ -216,7 +216,7 @@ public class WaveFunctionCollapse
         while (stack.Count > 0) {
             var currCoords = stack.Pop();
 
-            // Check which of the four neighbors are valid, because we might be on the grid edge
+            // Check which of the four neighbors are valid, because we might be on the grid border
             var validNeighbors = new List<(NeighborLocation nbType, Vector2Int vec)>();
             Offsets.ForEach(offset => {
                 var newX = currCoords.x + offset.vec.x;
@@ -228,7 +228,7 @@ public class WaveFunctionCollapse
                 }
             });
 
-            // For each up, down, left, and right (in that order) neighbor of the collapsed cell
+            // For each (at most) up, down, left, and right (in that order) neighbor of the current cell
             foreach (var (nbLoc, neighborCoords) in validNeighbors) {
                 var nbCell = grid[neighborCoords.y, neighborCoords.x];
 

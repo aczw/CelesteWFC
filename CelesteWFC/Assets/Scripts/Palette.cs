@@ -36,7 +36,7 @@ public enum SymmetryType
 
 /// <summary>
 ///     Stores the <see cref="Tile">Tile</see> along with additional metadata to help the algorithm collapse and propagate
-///     this tile. Note that <see cref="symmetry" /> only has effect when <see cref="canRotate" /> is <c>true</c>.
+///     this tile.
 /// </summary>
 [Serializable] public struct TileInfo
 {
