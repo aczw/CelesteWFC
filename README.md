@@ -81,7 +81,10 @@ This is how I imagine the application will look like:
   - Final polish, fix bugs, making the UI look good, etc.
   - Any of the stretch goals
 
-## Milestone 1
+
+## Project log
+
+### Milestone 1
 
 I've successfully reached my milestone 1 goals and then some. In particular, a basic Unity 6 project was set up with TextMeshPro imported. This allowed me to work on the main focus of this milestone (and overarching project), the actual algorithm. It took a few iterations and rewrites but I think I've settled on a design that is understandable and modular.
 
@@ -91,7 +94,7 @@ As I learned more about WFC, it turned out that there are many small decisions I
 
 I made a lot of dumb mistakes and spent a lot of time debugging issues that turned out to not be related to my WFC implementation at all. It's okay though, everything works now and it's in the past.
 
-### Examples
+#### Examples
 
 Using a simple tile palette made out of interconnecting pipes, I'm already able to generate interesting-looking patterns. I took the opportunity to also implement some milestone 2 features early, including the ability to specify grid width/height and the ability to "step" through iterations of the algorithm (instead of it all being solved at once). All of these helped with debugging. Take a look:
 
@@ -103,7 +106,7 @@ Using a simple tile palette made out of interconnecting pipes, I'm already able 
 | ![](media/m1/8x4_step.png) |
 | You can also step through each iteration step individually. Here the algorithm is in the middle of generating a 8x4 grid. |
 
-## Milestone 2
+### Milestone 2
 
 For my second milestone I mostly worked on the grid editor and the tile constraining functionality. There's an actual UI now, and you're able to select a tile from the grid and pick from one of its possible states to collapse to.
 
@@ -114,3 +117,14 @@ https://github.com/user-attachments/assets/4adc989e-292f-44eb-bcf7-442bf15f3ce4
 I was not able to finish all the goals I set. Namely, importing the Celeste tileset as well as the player controller. The grid editor took more time than expected to implement, and honestly I think I tried doing too much at once. Timeline wise I should still be fine, because my generator is 100% done and my plans for the final week were bugfixing and polish, so I'm not too far behind.
 
 I've also begun looking for Celeste's tilesets already. Out of all places I found this [premade Celeste tileset](https://gamebanana.com/tools/13614) for Pizza Tower, which has everything I need. As for the player controller, I'll basically be copying the video I listed in my references above.
+
+### Final submission
+
+- Probability of a tile being chosen isn't affected by how many orientations it has anymore
+
+#### Optimizations
+
+List of stuff I can rewrite to speed up algorithm propagation that I ran out of time for:
+
+- Storing the states more efficiently in `Cell` so that we don't have to create and destroy the dictionary every time we call `Collapse()`, or some other way of tracking the "weight" of a state
+- Get rid of 2D for loop to check if whole grid is collapsed in `IsCollapsed()`

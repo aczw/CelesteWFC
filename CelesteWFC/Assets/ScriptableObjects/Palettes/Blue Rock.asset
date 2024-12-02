@@ -112,3 +112,10 @@ MonoBehaviour:
       down: -1
       left: 2
       right: -1
+  - tile: {fileID: 11400000, guid: a9694e8b403011b4bbeffb5d6745dcae, type: 2}
+    symmetry: 1
+    originalSocket:
+      up: 4
+      down: 4
+      left: 4
+      right: 4

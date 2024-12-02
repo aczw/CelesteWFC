@@ -181,11 +181,34 @@ public class WaveFunctionCollapse
     }
 
     private void Collapse(in Vector2Int coords) {
-        var currentPossibleStates = grid[coords.y, coords.x].states;
-        var randomState = currentPossibleStates[Random.Range(0, currentPossibleStates.Count)];
+        var cell = grid[coords.y, coords.x];
 
-        currentPossibleStates.Clear();
-        currentPossibleStates.Add(randomState);
+        // "Group" states that have the same tile together so that tiles that have multiple orientations
+        // aren't unfairly favored when we randomly select a state
+        var tileStatesMap = new Dictionary<Tile, List<State>>();
+        foreach (var state in cell.states) {
+            if (tileStatesMap.ContainsKey(state.tile)) {
+                tileStatesMap[state.tile].Add(state);
+            }
+            else {
+                tileStatesMap.Add(state.tile, new List<State> { state });
+            }
+        }
+
+        // Convert dictionary to a list so that we can randomly index into it and select a tile
+        var possibleTiles = new List<Tile>(tileStatesMap.Keys);
+        var chosenTile = possibleTiles[Random.Range(0, possibleTiles.Count)];
+
+        // Check how many states there are that have this tile. If there's only one we simply pick it, otherwise we
+        // randomly pick a state from the list
+        var numStates = tileStatesMap[chosenTile].Count;
+        var randomState = numStates switch {
+            1 => tileStatesMap[chosenTile][0],
+            _ => tileStatesMap[chosenTile][Random.Range(0, numStates)]
+        };
+
+        cell.states.Clear();
+        cell.states.Add(randomState);
     }
 
     private Vector2Int PickLowestEntropyCell() {
