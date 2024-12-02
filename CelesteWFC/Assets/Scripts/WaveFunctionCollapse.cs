@@ -113,6 +113,7 @@ public class Cell
                 switch (ti.symmetry) {
                 case SymmetryType.T:
                 case SymmetryType.L:
+                case SymmetryType.X:
                     for (var i = 0; i < 3; ++i) {
                         currState = State.RotateClockwise(currState);
                         statesFromTile.Add(currState);
@@ -125,8 +126,6 @@ public class Cell
                     statesFromTile.Add(currState);
                     break;
 
-                // X-type tiles don't need to be rotated
-                case SymmetryType.X:
                 case SymmetryType.CanNotRotate:
                 default:
                     break;
