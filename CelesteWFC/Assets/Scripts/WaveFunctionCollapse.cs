@@ -231,6 +231,8 @@ public class WaveFunctionCollapse
                     currMin = uniqueTiles.Count;
                     coords = (x, y);
                 }
+
+                uniqueTiles.Clear();
             }
         }
 
