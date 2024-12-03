@@ -1194,15 +1194,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4912241165538542599, guid: eec822f42e9bc3c4bb68486aad521f24, type: 3}
       propertyPath: m_LocalScale.x
-      value: 5.9331093
+      value: 7.246
       objectReference: {fileID: 0}
     - target: {fileID: 4912241165538542599, guid: eec822f42e9bc3c4bb68486aad521f24, type: 3}
       propertyPath: m_LocalScale.y
-      value: 5.9331093
+      value: 7.246
       objectReference: {fileID: 0}
     - target: {fileID: 4912241165538542599, guid: eec822f42e9bc3c4bb68486aad521f24, type: 3}
       propertyPath: m_LocalScale.z
-      value: 5.9331093
+      value: 7.246
       objectReference: {fileID: 0}
     - target: {fileID: 4912241165538542599, guid: eec822f42e9bc3c4bb68486aad521f24, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1271,6 +1271,10 @@ PrefabInstance:
     - target: {fileID: 5801275436884279763, guid: eec822f42e9bc3c4bb68486aad521f24, type: 3}
       propertyPath: m_Name
       value: Madeline
+      objectReference: {fileID: 0}
+    - target: {fileID: 6109512447158011474, guid: eec822f42e9bc3c4bb68486aad521f24, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
