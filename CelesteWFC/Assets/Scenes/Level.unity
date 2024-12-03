@@ -1214,7 +1214,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4912241165538542599, guid: eec822f42e9bc3c4bb68486aad521f24, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.03740721
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4912241165538542599, guid: eec822f42e9bc3c4bb68486aad521f24, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1281,6 +1281,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eec822f42e9bc3c4bb68486aad521f24, type: 3}
+--- !u!4 &684156839 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4912241165538542599, guid: eec822f42e9bc3c4bb68486aad521f24, type: 3}
+  m_PrefabInstance: {fileID: 684156838}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &903100664
 GameObject:
   m_ObjectHideFlags: 0
@@ -1743,6 +1748,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemap: {fileID: 568532091}
+  madeline: {fileID: 684156839}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

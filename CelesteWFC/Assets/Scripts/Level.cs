@@ -5,6 +5,7 @@ using UnityEngine.Tilemaps;
 public class Level : MonoBehaviour
 {
     [SerializeField] private Tilemap tilemap;
+    [SerializeField] private Transform madeline;
 
     private void Start() {
         if (Container.I == null || Container.I.wfc == null) {
@@ -25,6 +26,13 @@ public class Level : MonoBehaviour
 
                 tilemap.SetTransformMatrix(position, rotMat);
             }
+        }
+    }
+
+
+    private void Update() {
+        if (madeline.position.y < -10f) {
+            madeline.position = new Vector3(1.5f, 1.8f, 0f);
         }
     }
 
