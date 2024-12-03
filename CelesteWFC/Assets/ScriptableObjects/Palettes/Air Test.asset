@@ -10,40 +10,40 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee118c76023b89444bf2462f628a3f7a, type: 3}
-  m_Name: Test
+  m_Name: Air Test
   m_EditorClassIdentifier: 
-  paletteName: Test
+  paletteName: Air Test
   type: 1
   tiles:
-  - tile: {fileID: 11400000, guid: 70f60aa05984b754d97f88dc7219f7f8, type: 2}
+  - tile: {fileID: 11400000, guid: 402ca90e570c1024e920636d40a8ba95, type: 2}
     symmetry: 0
     originalSocket:
       up: 0
       down: 0
       left: 0
       right: 0
-  - tile: {fileID: 11400000, guid: f5c4e3ffea6b0a840a9e30a0265d3ca2, type: 2}
+  - tile: {fileID: 11400000, guid: 55525942955572a4baf391c21df06d33, type: 2}
     symmetry: 0
     originalSocket:
       up: -1
       down: -1
       left: -1
       right: -1
-  - tile: {fileID: 11400000, guid: 697368e7b85811a4abd7d6efe1f5c9d9, type: 2}
+  - tile: {fileID: 11400000, guid: 72369e4d324f8674d825f67b98ee8b3c, type: 2}
     symmetry: 3
     originalSocket:
       up: 0
       down: 0
       left: -1
       right: -1
-  - tile: {fileID: 11400000, guid: f82b04dd1ca33764696d3c5bdf04cec3, type: 2}
+  - tile: {fileID: 11400000, guid: caccdbc2760ec934c8530c703b56673c, type: 2}
     symmetry: 4
     originalSocket:
       up: 0
       down: -1
       left: -1
       right: 0
-  - tile: {fileID: 11400000, guid: 31b258489bc3c41408733fecc459ae32, type: 2}
+  - tile: {fileID: 11400000, guid: 93df96d3be3b45c4b8b3225487b5dbaf, type: 2}
     symmetry: 2
     originalSocket:
       up: 0

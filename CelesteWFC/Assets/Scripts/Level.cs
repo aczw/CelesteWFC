@@ -29,7 +29,6 @@ public class Level : MonoBehaviour
         }
     }
 
-
     private void Update() {
         if (madeline.position.y < -10f) {
             madeline.position = new Vector3(1.5f, 1.8f, 0f);

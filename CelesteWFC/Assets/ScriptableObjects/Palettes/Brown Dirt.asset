@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee118c76023b89444bf2462f628a3f7a, type: 3}
+  m_Name: Brown Dirt
+  m_EditorClassIdentifier: 
+  paletteName: Brown Dirt
+  type: 0
+  tiles:
+  - tile: {fileID: 11400000, guid: 13c7d08f481d6d949aef72240b2da9cb, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: -1
+      down: 1
+      left: -1
+      right: 0
+  - tile: {fileID: 11400000, guid: a418b5e5e5d2f764d9429b2653c23b84, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: -1
+      down: 4
+      left: 0
+      right: 0
+  - tile: {fileID: 11400000, guid: b627fd371380521448fb26c7dcb4bb94, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: -1
+      down: 3
+      left: 0
+      right: -1
+  - tile: {fileID: 11400000, guid: 57588799f9754f54e88efd7f11673064, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: 1
+      down: 1
+      left: -1
+      right: 4
+  - tile: {fileID: 11400000, guid: 5f2305f8afac29a4ab742106e1b16359, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: 3
+      down: 3
+      left: 4
+      right: -1
+  - tile: {fileID: 11400000, guid: 6444cd070b02b5046a02db45fe8b2b97, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: 4
+      down: 3
+      left: 4
+      right: 2
+  - tile: {fileID: 11400000, guid: 3b0eb1b653600ce4785b729cb4685003, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: 4
+      down: 1
+      left: 2
+      right: 4
+  - tile: {fileID: 11400000, guid: 4bde8cfdfac35fe43a0023ac6d15ec1e, type: 2}
+    symmetry: 1
+    originalSocket:
+      up: 4
+      down: 4
+      left: 4
+      right: 4
+  - tile: {fileID: 11400000, guid: 3fe7b58bbabf45d47b0baa2f1135df48, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: 4
+      down: 4
+      left: 4
+      right: 4
+  - tile: {fileID: 11400000, guid: 4643df1e033d739499caa2fd7094dd93, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: 3
+      down: 4
+      left: 4
+      right: 0
+  - tile: {fileID: 11400000, guid: e6d4f91eaeb14624ca4e71cc46c27c6e, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: 1
+      down: 4
+      left: 0
+      right: 4
+  - tile: {fileID: 11400000, guid: 4b025744955803547a84e63e716a7d97, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: 1
+      down: -1
+      left: -1
+      right: 2
+  - tile: {fileID: 11400000, guid: 136b13d00dad4c44bab08c73231374c2, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: 4
+      down: -1
+      left: 2
+      right: 2
+  - tile: {fileID: 11400000, guid: 8425163b13f421448bf654e742fe1422, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: 3
+      down: -1
+      left: 2
+      right: -1

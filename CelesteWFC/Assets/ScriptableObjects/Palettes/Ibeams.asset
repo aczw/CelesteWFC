@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee118c76023b89444bf2462f628a3f7a, type: 3}
+  m_Name: Ibeams
+  m_EditorClassIdentifier: 
+  paletteName: Ibeams
+  type: 0
+  tiles:
+  - tile: {fileID: 11400000, guid: 237b95eacfcafde418e533b189bbac84, type: 2}
+    symmetry: 0
+    originalSocket:
+      up: 0
+      down: 0
+      left: 0
+      right: 0
+  - tile: {fileID: 11400000, guid: 237b95eacfcafde418e533b189bbac84, type: 2}
+    symmetry: 4
+    originalSocket:
+      up: -1
+      down: 0
+      left: -1
+      right: 0
+  - tile: {fileID: 11400000, guid: 5c7ead441319cd1438137ba348018b6e, type: 2}
+    symmetry: 3
+    originalSocket:
+      up: -1
+      down: -1
+      left: 0
+      right: 0
