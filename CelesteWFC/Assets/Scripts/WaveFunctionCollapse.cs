@@ -215,14 +215,20 @@ public class WaveFunctionCollapse
         var currMin = int.MaxValue;
         var coords = (-1, -1);
 
+        var uniqueTiles = new HashSet<Tile>();
         for (var y = 0; y < height; ++y) {
             for (var x = 0; x < width; ++x) {
                 var cell = grid[y, x];
-                var numberOfPossibleStates = cell.states.Count;
+
+                // Let the set figure out the total number of unique tiles in this cell and use that number
+                // because we don't want tiles with multiple orientations to be unfairly favored
+                foreach (var state in cell.states) {
+                    uniqueTiles.Add(state.tile);
+                }
 
                 // If this cell has a smaller number of states than the previous *and* it's not fully collapsed
-                if (numberOfPossibleStates < currMin && !cell.IsCollapsed) {
-                    currMin = numberOfPossibleStates;
+                if (uniqueTiles.Count < currMin && !cell.IsCollapsed) {
+                    currMin = uniqueTiles.Count;
                     coords = (x, y);
                 }
             }

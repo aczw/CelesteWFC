@@ -127,4 +127,5 @@ I've also begun looking for Celeste's tilesets already. Out of all places I foun
 List of stuff I can rewrite to speed up algorithm propagation that I ran out of time for:
 
 - Storing the states more efficiently in `Cell` so that we don't have to create and destroy the dictionary every time we call `Collapse()`, or some other way of tracking the "weight" of a state
+  - Same with `PickLowestEntropyCell()`
 - Get rid of 2D for loop to check if whole grid is collapsed in `IsCollapsed()`
