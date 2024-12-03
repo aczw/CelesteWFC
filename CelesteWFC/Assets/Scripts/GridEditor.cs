@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
@@ -39,6 +40,7 @@ public class GridEditor : MonoBehaviour
     [SerializeField] private GameObject content;
     [SerializeField] private GameObject buttonPrefab;
     [SerializeField] private Sprite blank;
+    [SerializeField] private Button play;
     [SerializeField] private InputSettings inputSettings;
     [SerializeField] private SelectionTiles selectionTiles;
     [SerializeField] private PlaceholderTiles placeholderTiles;
@@ -103,6 +105,11 @@ public class GridEditor : MonoBehaviour
             selection.SetTile(SelectedPos.Value, selectionTiles.selected);
             selection.SetColor(SelectedPos.Value, new Color(1f, gb, gb));
         }
+
+        var readyToPlay = CelesteWFC.I.gridSettings.width == 40 &&
+                          CelesteWFC.I.gridSettings.height == 23 &&
+                          CelesteWFC.I.IsCollapsed();
+        play.interactable = readyToPlay;
 
         // Only do input stuff if mouse is not currently over the side UI
         if (UI.IsHoveringOver) return;
@@ -237,5 +244,10 @@ public class GridEditor : MonoBehaviour
     public void CameraCeleste() {
         cam.transform.position = new Vector3(15.5f, 11.2f, -10);
         cam.orthographicSize = 14.5f;
+    }
+
+    public void LoadLevel() {
+        Container.I.wfc = CelesteWFC.I.wfc;
+        SceneManager.LoadScene("Level");
     }
 }

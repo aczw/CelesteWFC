@@ -11,13 +11,12 @@ using UnityEngine.Tilemaps;
 public class CelesteWFC : MonoBehaviour
 {
     public static CelesteWFC I { get; private set; }
+    public WaveFunctionCollapse wfc { get; private set; }
 
     public Tilemap output;
     public PaletteSet paletteSet;
     public GridEditor editor;
     public GridSize gridSettings;
-
-    private WaveFunctionCollapse wfc;
 
     private void Awake() {
         if (I == null) {
@@ -150,6 +149,10 @@ public class CelesteWFC : MonoBehaviour
         editor.RedrawPlaceholder();
         editor.CameraCeleste();
         Paint();
+    }
+
+    public bool IsCollapsed() {
+        return wfc.IsCollapsed();
     }
 
     public bool IsCollapsed(int x, int y) {
