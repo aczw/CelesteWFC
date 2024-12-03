@@ -7,8 +7,9 @@ using Random = UnityEngine.Random;
 
 public struct State
 {
-    public Tile tile;
     public string paletteName;
+    public Palette.Type paletteType;
+    public Tile tile;
 
     public Socket socket;
     public int timesRotatedClockwise;
@@ -18,8 +19,9 @@ public struct State
         var temp = socket.up;
 
         return new State {
-            tile = state.tile,
             paletteName = state.paletteName,
+            paletteType = state.paletteType,
+            tile = state.tile,
             socket = new Socket {
                 up = socket.left,
                 left = socket.down,
@@ -27,66 +29,6 @@ public struct State
                 right = temp
             },
             timesRotatedClockwise = (state.timesRotatedClockwise + 1) % 4
-        };
-    }
-}
-
-/// <summary>
-///     <para>
-///         This class checks whether sockets between the current and neighbor cell are "valid." Validity can mean
-///         different things depending on what <see cref="PaletteType" /> we're using.
-///     </para>
-///     <para>
-///         Currently, there are two types:
-///         <ul>
-///             <li>
-///                 <see cref="PaletteType.Single" />: true if both socket IDs are equal. Note this means two invalid
-///                 sockets will also return true. This is fine for <see cref="PaletteSet" />s that only have one
-///                 <see cref="Palette" />.
-///             </li>
-///             <li>
-///                 <see cref="PaletteType.Multiple" />: assumes we're dealing with multiple palettes. Therefore, there are
-///                 two ways to be valid: if both are from the palette and have valid, equal socket IDs, or they're from
-///                 different palettes and both have invalid socket IDs (i.e. facing "away" from each other).
-///             </li>
-///         </ul>
-///     </para>
-/// </summary>
-public class NeighborValidator
-{
-    private enum PaletteType
-    {
-        Single,
-        Multiple
-    }
-
-    private readonly PaletteType type;
-
-    public NeighborValidator(bool includeFalseSockets) {
-        type = includeFalseSockets ? PaletteType.Single : PaletteType.Multiple;
-    }
-
-    public bool IsValid(in NeighborLocation nbLoc, in State curr, in State nb) {
-        var fromSamePalette = curr.paletteName == nb.paletteName;
-
-        var currSocket = curr.socket;
-        var nbSocket = nb.socket;
-        var (currID, nbID) = nbLoc switch {
-            NeighborLocation.Up => (currSocket.up, nbSocket.down),
-            NeighborLocation.Down => (currSocket.down, nbSocket.up),
-            NeighborLocation.Left => (currSocket.left, nbSocket.right),
-            NeighborLocation.Right => (currSocket.right, nbSocket.left),
-            _ => throw new ArgumentOutOfRangeException()
-        };
-
-        var equalSocketIDs = currID == nbID;
-        var validSocketIDs = currID >= 0 && nbID >= 0;
-
-        return type switch {
-            PaletteType.Single => equalSocketIDs,
-            PaletteType.Multiple => (fromSamePalette && equalSocketIDs && validSocketIDs) ||
-                                    (!fromSamePalette && equalSocketIDs && !validSocketIDs),
-            _ => throw new ArgumentOutOfRangeException()
         };
     }
 }
@@ -101,8 +43,9 @@ public class Cell
         paletteSet.palettes.ForEach(p => {
             states.AddRange(p.tiles.SelectMany(ti => {
                 var currState = new State {
-                    tile = ti.tile,
                     paletteName = p.paletteName,
+                    paletteType = p.type,
+                    tile = ti.tile,
                     socket = ti.originalSocket,
                     timesRotatedClockwise = 0
                 };
@@ -142,7 +85,7 @@ public class Cell
 /// <summary>
 ///     Denotes on which of the four sides does the neighbor cell lie relative to the current cell.
 /// </summary>
-public enum NeighborLocation
+public enum NbLocation
 {
     Up,
     Down,
@@ -158,20 +101,19 @@ public class WaveFunctionCollapse
     public readonly int width;
     public readonly int height;
 
-    private readonly NeighborValidator nbValidator;
-
-    // Up, down, left, right neighbors. Note to self: I treat coords == indices. Since row index increases
-    // going "down" this means to go up, we subtract by 1 and vice versa.
-    private static readonly List<(NeighborLocation nbType, Vector2Int vec)> Offsets = new() {
-        (NeighborLocation.Up, new Vector2Int(0, -1)), (NeighborLocation.Down, new Vector2Int(0, 1)),
-        (NeighborLocation.Left, new Vector2Int(-1, 0)), (NeighborLocation.Right, new Vector2Int(1, 0))
+    /// <summary>
+    ///     Up, down, left, right neighbors. Note to self: I treat coords == indices. Since row index increases going "down"
+    ///     this means to go up, we subtract by 1 and vice versa.
+    /// </summary>
+    private static readonly List<(NbLocation nbType, Vector2Int vec)> Offsets = new() {
+        (NbLocation.Up, new Vector2Int(0, -1)), (NbLocation.Down, new Vector2Int(0, 1)),
+        (NbLocation.Left, new Vector2Int(-1, 0)), (NbLocation.Right, new Vector2Int(1, 0))
     };
 
     public WaveFunctionCollapse(int width, int height, in PaletteSet paletteSet) {
         grid = new Cell[height, width];
         this.width = width;
         this.height = height;
-        nbValidator = new NeighborValidator(paletteSet.includeFalseSockets);
 
         for (var y = 0; y < height; ++y) {
             for (var x = 0; x < width; ++x) {
@@ -239,6 +181,40 @@ public class WaveFunctionCollapse
         return new Vector2Int(coords.Item1, coords.Item2);
     }
 
+    /// <summary>
+    ///     Helper function that checks if two neighboring states are compatible with each other, i.e. can be placed
+    ///     next to each other.
+    /// </summary>
+    private static bool NeighborIsValid(in NbLocation nbLoc, in State curr, in State nb) {
+        var fromSamePalette = curr.paletteName == nb.paletteName;
+
+        var currSocket = curr.socket;
+        var nbSocket = nb.socket;
+        var (currID, nbID) = nbLoc switch {
+            NbLocation.Up => (currSocket.up, nbSocket.down),
+            NbLocation.Down => (currSocket.down, nbSocket.up),
+            NbLocation.Left => (currSocket.left, nbSocket.right),
+            NbLocation.Right => (currSocket.right, nbSocket.left),
+            _ => throw new ArgumentOutOfRangeException()
+        };
+
+        var equalSocketIDs = currID == nbID;
+        var validSocketIDs = currID >= 0 && nbID >= 0;
+
+        // Palette type only matters if we're potentially placing two tiles from the same palette next to each other
+        if (fromSamePalette) {
+            return curr.paletteType switch {
+                Palette.Type.Unfold => equalSocketIDs && validSocketIDs,
+                Palette.Type.Fold => equalSocketIDs,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+        }
+
+        // Valid only if both tiles are "facing away" from each other (because we know they're from different palettes).
+        // Logically this checks if both IDs are -1 (aka invalid)
+        return equalSocketIDs && !validSocketIDs;
+    }
+
     private void Propagate(Vector2Int coords) {
         var stack = new Stack<Vector2Int>();
         stack.Push(coords);
@@ -247,7 +223,7 @@ public class WaveFunctionCollapse
             var currCoords = stack.Pop();
 
             // Check which of the four neighbors are valid, because we might be on the grid border
-            var validNeighbors = new List<(NeighborLocation nbType, Vector2Int vec)>();
+            var validNeighbors = new List<(NbLocation nbType, Vector2Int vec)>();
             Offsets.ForEach(offset => {
                 var newX = currCoords.x + offset.vec.x;
                 var newY = currCoords.y + offset.vec.y;
@@ -274,7 +250,7 @@ public class WaveFunctionCollapse
                 var validNeighborStates = new HashSet<State>();
                 foreach (var nbState in nbCell.states) {
                     foreach (var currState in grid[currCoords.y, currCoords.x].states) {
-                        if (nbValidator.IsValid(nbLoc, currState, nbState)) {
+                        if (NeighborIsValid(nbLoc, currState, nbState)) {
                             validNeighborStates.Add(nbState);
                         }
                     }
@@ -307,7 +283,7 @@ public class WaveFunctionCollapse
         Propagate(nextCellToCollapse);
     }
 
-    // Specifically pick a coordinate and state to collapse to
+    // Specifically pick a coordinate and state to collapse to. Assumes the input state is valid for the cell
     public void Iterate(int x, int y, State state) {
         var pos = new Vector2Int(x, height - 1 - y);
         var cellStates = grid[height - 1 - y, x].states;

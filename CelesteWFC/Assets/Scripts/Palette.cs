@@ -21,7 +21,7 @@ public enum SymmetryType
 ///     Stores the valid socket IDs on each of the four sides of the current cell. A value of <c>-1</c> means that this
 ///     direction does not have a valid socket, i.e. no connections are possible.
 /// </summary>
-/// <seealso cref="NeighborLocation" />
+/// <seealso cref="NbLocation" />
 [Serializable] public record Socket
 {
     [Min(-1)] public int up = -1;
@@ -53,6 +53,23 @@ public enum SymmetryType
 [CreateAssetMenu(fileName = "Palette", menuName = "ScriptableObjects/Palette")]
 public class Palette : ScriptableObject
 {
+    /// <summary>
+    ///     <para>
+    ///         Most spritesheets are not compatible with tiles being allowed to place two invalid sockets next to each other,
+    ///         because the art was not designed that way. Use <see cref="Type.Unfold" /> for that.
+    ///     </para>
+    ///     <para>
+    ///         Some simpler spritesheets (like simple pipes) can "fold" upon themselves. So <see cref="Type.Fold" /> works
+    ///         best.
+    ///     </para>
+    /// </summary>
+    public enum Type
+    {
+        Unfold,
+        Fold
+    }
+
     public string paletteName;
+    public Type type;
     [SerializeField] public List<TileInfo> tiles;
 }

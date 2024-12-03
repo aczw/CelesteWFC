@@ -8,6 +8,5 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Palette Set", menuName = "ScriptableObjects/Palette Set")]
 public class PaletteSet : ScriptableObject
 {
-    public bool includeFalseSockets;
     [SerializeField] public List<Palette> palettes;
 }
