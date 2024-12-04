@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 866be0a7b79250a40a00275a1c7cea2b, type: 3}
+  m_Name: Forsaken City (Air Visible)
+  m_EditorClassIdentifier: 
+  palettes:
+  - {fileID: 11400000, guid: d5d2df78117aecb40a3b3075e96effc6, type: 2}
+  - {fileID: 11400000, guid: f0668401783bd814aa24861247f9f075, type: 2}
+  - {fileID: 11400000, guid: 5ef72665b795a6b4090358cb8e56ab71, type: 2}
