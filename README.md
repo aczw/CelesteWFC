@@ -1,5 +1,9 @@
 # CelesteWFC
 
+## Showcase (~3.5 minutes)
+
+https://github.com/user-attachments/assets/4f88272b-c22c-4c28-8ff9-b8661165cad2
+
 ## Introduction/motivations
 
 I love Celeste. Everything about the game is great: the pixel art, the music, the gameplay, the story. One of the best parts of the game are the levels. They are designed so well and I can't believe that they're tile based because everything looks so natural.
