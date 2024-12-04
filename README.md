@@ -4,6 +4,8 @@
 
 https://github.com/user-attachments/assets/4f88272b-c22c-4c28-8ff9-b8661165cad2
 
+> *Video can also be found in `media/` folder, called `CelesteWFC_Showcase.mp4`.*
+
 ## Introduction/motivations
 
 I love Celeste. Everything about the game is great: the pixel art, the music, the gameplay, the story. One of the best parts of the game are the levels. They are designed so well and I can't believe that they're tile based because everything looks so natural.
@@ -124,7 +126,21 @@ I've also begun looking for Celeste's tilesets already. Out of all places I foun
 
 ### Final submission
 
-- Probability of a tile being chosen isn't affected by how many orientations it has anymore
+For the final results, please see the showcase video above. It demonstrates all the features and many different executions of the algorithm.
+
+On the surface the final submission doesn't really differ from milestone 2, but in the backend things were heavily modified. In particular, I rewrote stuff so the algorithm can handle multiple tilesets, introduced a "fold"/"unfold" flag, and fixed many bugs, including a big one: the probability of a tile being chosen isn't affected by how many orientations it has anymore.
+
+I also added player movement and a whole new scene where you can play the generated level as fake Madeline.
+
+It took me longer than expected to import Celeste's sprites. Every bit of progress I made I realized that some assumption I made was wrong or hardcoded. So in the process of adding the game sprites I touched every part of the codebase. But now everything is better than ever!
+
+#### Postmortem
+
+Overall, I achieved everything I wanted. I learned how to implement one possible version of WFC, I learned more about C# and its many upsides ~~and downsides~~, and I got very familiar with Unity tilemaps, especially runtime generation.
+
+I'm a bit sad that I wasn't able to get to any of the stretch goals. I mean, yeah, they're *stretch* goals, but it would've been really cool to do a live demo of me playing the level I generated within the actual game. When I have more time I would love to revisit any of those goals and further expand the project. I see so much potential here and I'm sure I'll slowly hack away at stuff for the foreseeable future.
+
+One interesting thing is that over the course of the project, my *mindset* towards the end product shifted. Originally I put more emphasis on being able to play the generated level, but over time I grew to see CelesteWFC as a *tool* more than a *game*. As I wrote code I kept thinking to myself, "this could be more modular and generalized." I ended up with a system that didn't really have anything to do with Celeste at all! In fact, I did player movement in the last few days; it feels more like a demo than an integral part of the project.
 
 #### Optimizations
 
